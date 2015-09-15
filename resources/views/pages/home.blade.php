@@ -21,7 +21,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <a href="{{URL::to('news/'.$post->slug.'')}}" class="thumbnail"><img
+                            <a href="{{URL::to('article/'.$post->slug.'')}}" class="thumbnail"><img
                                         src="http://placehold.it/260x180" alt=""></a>
                         </div>
                         <div class="col-md-10">
@@ -29,7 +29,7 @@
 
                             <p>
                                 <a class="btn btn-mini btn-default"
-                                   href="{{URL::to('news/'.$post->slug.'')}}">Read more</a>
+                                   href="{{URL::to('article/'.$post->slug.'')}}">Read more</a>
                             </p>
                         </div>
                     </div>
@@ -49,30 +49,8 @@
         </div>
     @endif
 
-    @if(count($photoAlbums)>0)
-        <div class="row">
-            <h2>Photos</h2>
-            @foreach($photoAlbums as $item)
-                <div class="col-sm-3">
-                    <div class="row">
-                        <a href="{{URL::to('photo/'.$item->id.'')}}"
-                           class="hover-effect">
-                            @if($item->album_image!="")
-                                <img class="col-sm-12"
-                                        src="{!! URL::to('appfiles/photoalbum/'.$item->folder_id.'/'.$item->album_image) !!}">
-                            @elseif($item->album_image_first!="")
-                                <img class="col-sm-12"
-                                     src="{!! URL::to('appfiles/photoalbum/'.$item->folder_id.'/'.$item->album_image_first) !!}">
-                            @else
-                                <img class="col-sm-12" src="{!! URL::to('appfiles/photoalbum/no_photo.png') !!}">
-                            @endif
-                        </a>
-                        <div class=" col-sm-12">{{$item->name}}</div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @endif
+
+
 
 @endsection
 @stop

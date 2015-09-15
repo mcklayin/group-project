@@ -1,9 +1,12 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Group;
 use App\Http\Controllers\AdminController;
 use App\User;
 use App\Http\Requests\Admin\UserRequest;
 use Datatables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 
 class UserController extends AdminController
@@ -13,6 +16,7 @@ class UserController extends AdminController
     public function __construct()
     {
         view()->share('type', 'user');
+        view()->share('params', '');
     }
 
     /*
@@ -23,6 +27,9 @@ class UserController extends AdminController
     public function index()
     {
         // Show the page
+        $group_id = Input::get('group_id');
+        view()->share('params', json_encode(array('group_id'=>$group_id)));
+
         return view('admin.user.index');
     }
 
@@ -33,7 +40,8 @@ class UserController extends AdminController
      */
     public function create()
     {
-        return view('admin.user.create_edit');
+        $groups = Group::all()->lists('name','id');
+        return view('admin.user.create_edit', compact('groups'));
     }
 
     /**
@@ -46,7 +54,7 @@ class UserController extends AdminController
 
         $user = new User ($request->except('password','password_confirmation'));
         $user->password = bcrypt($request->password);
-        $user->confirmation_code = str_random(32);
+        $user->confirmed = 1;
         $user->save();
     }
 
@@ -58,7 +66,10 @@ class UserController extends AdminController
      */
     public function edit(User $user)
     {
-        return view('admin.user.create_edit', compact('user'));
+        $groups = Group::all()->lists('name','id');
+
+
+        return view('admin.user.create_edit', compact('user', 'groups'));
     }
 
     /**
@@ -77,7 +88,8 @@ class UserController extends AdminController
                 $user->password = bcrypt($password);
             }
         }
-        $user->update($request->except('password','password_confirmation'));
+        $user->group_id = $request->get('group_id');
+        $user->update($request->except('password','password_confirmation','group_id'));
     }
 
     /**
@@ -90,6 +102,13 @@ class UserController extends AdminController
     public function delete(User $user)
     {
         return view('admin.user.delete', compact('user'));
+    }
+
+    public function deleteFromGroup(User $user, $id)
+    {
+        $d = DB::table("user_groups")->where('user_id','=',$user->id)->delete();
+
+        return Redirect::to('/admin/user?group_id='.$id);
     }
 
     /**
@@ -110,13 +129,27 @@ class UserController extends AdminController
      */
     public function data()
     {
-        $users = User::select(array('users.id', 'users.name', 'users.email', 'users.confirmed', 'users.created_at'));
+        $users = User::leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
+                 ->select(array('users.id', 'users.name', 'users.email', 'users.confirmed','user_groups.group_id', 'users.created_at'));
+
+        $params = Input::get('params');
+        $group_id = $params['group_id'];
+
+        if($group_id)
+        {
+            $users->where('user_groups.group_id','=',$group_id);
+        }
 
         return Datatables::of($users)
             ->edit_column('confirmed', '@if ($confirmed=="1") <span class="glyphicon glyphicon-ok"></span> @else <span class=\'glyphicon glyphicon-remove\'></span> @endif')
             ->add_column('actions', '@if ($id!="1")<a href="{{{ URL::to(\'admin/user/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
                     <a href="{{{ URL::to(\'admin/user/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
-                @endif')
+                @endif
+              @if($group_id)
+                <a href="{{{ URL::to(\'admin/user/\' . $id . \'/deleteFromGroup/\'.$group_id ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete_from_froup") }}</a>
+              @endif
+               <input type="hidden" name="row" value="{{$id}}" id="row">
+                ')
             ->remove_column('id')
             ->make();
     }

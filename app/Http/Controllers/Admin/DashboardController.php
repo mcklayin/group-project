@@ -13,6 +13,7 @@ class DashboardController extends AdminController {
     {
         parent::__construct();
         view()->share('type', '');
+        view()->share('params', '');
     }
 
 	public function index()
@@ -22,8 +23,7 @@ class DashboardController extends AdminController {
         $news = Article::count();
         $newscategory = ArticleCategory::count();
         $users = User::count();
-        $photo = Photo::count();
-        $photoalbum = PhotoAlbum::count();
-		return view('admin.dashboard.index',  compact('title','news','newscategory','photo','photoalbum','users'));
+
+		return view('admin.dashboard.index',  compact('title','news','newscategory','users'));
 	}
 }
