@@ -11,6 +11,7 @@ class AdminController extends Controller {
     {
         $this->middleware('auth');
         $this->middleware('admin');
+
     }
 
 }

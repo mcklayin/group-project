@@ -2,10 +2,11 @@
 
 /****************   Model binding into route **************************/
 Route::model('article', 'App\Article');
+Route::model('group', 'App\Group');
+Route::model('static', 'App\StaticBlocks');
+Route::model('file', 'App\Files');
 Route::model('articlecategory', 'App\ArticleCategory');
 Route::model('language', 'App\Language');
-Route::model('photoalbum', 'App\PhotoAlbum');
-Route::model('photo', 'App\Photo');
 Route::model('user', 'App\User');
 Route::pattern('id', '[0-9]+');
 Route::pattern('slug', '[0-9a-z-_]+');
@@ -17,8 +18,6 @@ Route::get('about', 'PagesController@about');
 Route::get('contact', 'PagesController@contact');
 Route::get('articles', 'ArticlesController@index');
 Route::get('article/{slug}', 'ArticlesController@show');
-Route::get('video/{id}', 'VideoController@show');
-Route::get('photo/{id}', 'PhotoController@show');
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
@@ -43,7 +42,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('articlecategory/{articlecategory}/show', 'Admin\ArticleCategoriesController@show');
     Route::get('articlecategory/{articlecategory}/edit', 'Admin\ArticleCategoriesController@edit');
     Route::get('articlecategory/{articlecategory}/delete', 'Admin\ArticleCategoriesController@delete');
-    Route::get('articlecategory/reorder', 'ArticleCategoriesController@getReorder');
+    Route::get('articlecategory/reorder', 'Admin\ArticleCategoriesController@getReorder');
     Route::resource('articlecategory', 'Admin\ArticleCategoriesController');
 
     # Articles
@@ -54,24 +53,34 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('article/reorder', 'Admin\ArticleController@getReorder');
     Route::resource('article', 'Admin\ArticleController');
 
-    # Photo Album
-    Route::get('photoalbum/data', 'Admin\PhotoAlbumController@data');
-    Route::get('photoalbum/{photoalbum}/show', 'Admin\PhotoAlbumController@show');
-    Route::get('photoalbum/{photoalbum}/edit', 'Admin\PhotoAlbumController@edit');
-    Route::get('photoalbum/{photoalbum}/delete', 'Admin\PhotoAlbumController@delete');
-    Route::resource('photoalbum', 'Admin\PhotoAlbumController');
+    #File
+    Route::get('file/data', 'Admin\FileController@data');
+    Route::get('file/{file}/show', 'Admin\FileController@show');
+    Route::get('file/{file}/edit', 'Admin\FileController@edit');
+    Route::get('file/{file}/delete', 'Admin\FileController@delete');
+    Route::get('file', 'Admin\FileController@index');
 
-    # Photo
-    Route::get('photo/data', 'Admin\PhotoController@data');
-    Route::get('photo/{photo}/show', 'Admin\PhotoController@show');
-    Route::get('photo/{photo}/edit', 'Admin\PhotoController@edit');
-    Route::get('photo/{photo}/delete', 'Admin\PhotoController@delete');
-    Route::resource('photo', 'Admin\PhotoController');
+
+    #Group
+    Route::get('group/data', 'Admin\GroupController@data');
+    Route::get('group/{group}/show', 'Admin\GroupController@show');
+    Route::get('group/{group}/edit', 'Admin\GroupController@edit');
+    Route::get('group/{group}/delete', 'Admin\GroupController@delete');
+    Route::resource('group', 'Admin\GroupController');
+
+    #Static Blocks
+    Route::get('static/data', 'Admin\StaticBlocksController@data');
+    Route::get('static/{static}/show', 'Admin\StaticBlocksController@show');
+    Route::get('static/{static}/edit', 'Admin\StaticBlocksController@edit');
+    Route::get('static/{static}/delete', 'Admin\StaticBlocksController@delete');
+    Route::resource('static', 'Admin\StaticBlocksController');
+
 
     # Users
     Route::get('user/data', 'Admin\UserController@data');
     Route::get('user/{user}/show', 'Admin\UserController@show');
     Route::get('user/{user}/edit', 'Admin\UserController@edit');
     Route::get('user/{user}/delete', 'Admin\UserController@delete');
+    Route::get('user/{user}/deleteFromGroup/{id}', 'Admin\UserController@deleteFromGroup');
     Route::resource('user', 'Admin\UserController');
 });
