@@ -15,6 +15,8 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    'allow_users_upload_files' => env('ALLOW_USERS_UPLOAD_FILES', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
