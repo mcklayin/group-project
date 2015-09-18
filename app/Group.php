@@ -15,6 +15,8 @@ class Group extends Model
 
     protected $guarded  = array('id');
 
+    protected  $hidden = array('pivot');
+
     /**
      * The rules for email field, automatic validation.
      *
@@ -23,6 +25,11 @@ class Group extends Model
     private $rules = array(
         'name' => 'required|min:2',
     );
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'user_groups');
+    }
 
 
 }

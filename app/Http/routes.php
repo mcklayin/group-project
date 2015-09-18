@@ -19,6 +19,57 @@ Route::get('contact', 'PagesController@contact');
 Route::get('articles', 'ArticlesController@index');
 Route::get('article/{slug}', 'ArticlesController@show');
 
+#user cabinet
+Route::get('cabinet/news', 'CabinetController@getGroupNewsFeed');
+Route::get('cabinet/files', 'CabinetController@getGroupFilesFeed');
+Route::get('cabinet/{user}', 'CabinetController@show');
+Route::get('cabinet', array('as'=>'cabinet','uses'=>'CabinetController@index'));
+
+#GROUP CONTROLLER
+Route::group(['middleware' => ['auth','group']], function () {
+
+    Route::get('group/getFile/{file}', 'GroupController@getFile');
+    Route::get('group/getFiles', 'GroupController@getFiles');
+    Route::get('group/getNews', 'GroupController@getNews');
+    Route::get('group/getUsers', 'GroupController@getUsers');
+    Route::get('group/getStaticBlocks', 'GroupController@getStaticBlocks');
+    Route::get('group', array('uses'=>'GroupController@index'));
+
+});
+
+
+#Group Manage
+Route::group(['middleware' => ['auth','group', 'group_roles']], function () {
+
+    #News
+    Route::get('group/manage/news', 'GroupManageController@news');
+    Route::any('group/manage/news/add', 'GroupManageController@addNews');
+    Route::any('group/manage/news/{article}/edit', 'GroupManageController@editNews');
+    Route::any('group/manage/news/{article}/delete', 'GroupManageController@deleteNews');
+
+    #Static Blocks
+    Route::get('group/manage/blocks', 'GroupManageController@staticBlocks');
+    Route::any('group/manage/blocks/add', 'GroupManageController@addStaticBlock');
+    Route::any('group/manage/blocks/{static}/edit', 'GroupManageController@editStaticBlock');
+    Route::any('group/manage/blocks/{static}/delete', 'GroupManageController@deleteStaticBlock');
+
+    #Files
+    Route::get('group/manage/files', 'GroupManageController@files');
+    Route::any('group/manage/files/addfile', 'GroupManageController@addFile');
+    Route::any('group/manage/files/{file}/delete', 'GroupManageController@deleteFile');
+
+    #Users
+    Route::get('group/manage/users', 'GroupManageController@users');
+    Route::any('group/manage/users/add', 'GroupManageController@addUser');
+    Route::any('group/manage/users/{user}/edit', 'GroupManageController@editUser');
+    Route::any('group/manage/users/{user}/delete', 'GroupManageController@deleteUser');
+
+    #Sends
+    Route::any('group/manage/sends', 'GroupManageController@makeSend');
+
+    Route::get('group/manage', array('uses' => 'GroupManageController@manage'));
+});
+
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
