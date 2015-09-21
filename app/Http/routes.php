@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth','group', 'group_roles']], function () {
 
     #Files
     Route::get('group/manage/files', 'GroupManageController@files');
-    Route::any('group/manage/files/addfile', 'GroupManageController@addFile');
+    Route::any('group/manage/files/add', 'GroupManageController@addFile');
     Route::any('group/manage/files/{file}/delete', 'GroupManageController@deleteFile');
 
     #Users

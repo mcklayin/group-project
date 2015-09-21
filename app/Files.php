@@ -12,6 +12,7 @@ class Files extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+    public $timestamps = true;
 
     protected $guarded  = array('id');
 

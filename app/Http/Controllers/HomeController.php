@@ -15,10 +15,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		$articles = Article::with('author')->orderBy('position', 'DESC')->orderBy('created_at', 'DESC')->limit(4)->get();
-
-
-		return view('pages.home', compact('articles'));
+		return view('pages.home');
 	}
 
 }
