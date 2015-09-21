@@ -69,6 +69,12 @@ return [
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'token' => 'Iqyli4Fe3hAAAAAAAAAACade7q2BL0H62Sw68lUdRrkOGw9G3OBpUQSH75EcyjQh',
+            'app' => 'group-site-m',
+            'bucket' => 'group-site-m',
+        ],
 
         'rackspace' => [
             'driver'    => 'rackspace',

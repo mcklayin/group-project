@@ -13,6 +13,10 @@ use App\Http\Controllers\Controller;
 use App\UserGroups;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class GroupController extends Controller
 {
@@ -121,7 +125,21 @@ class GroupController extends Controller
         {
             return $file->toJson();
         }
-        return response()->download(public_path().'/'.$file->path, $file->filename);
+
+        $response = new StreamedResponse;
+
+
+        $response->setCallBack(function() use ($file)
+        {
+            $disk = Storage::disk('dropbox');
+            echo $disk->get($file->path);
+        });
+
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file->filename);
+        $response->headers->set('Content-Disposition',$disposition);
+
+        return $response;
+      //  return response()->download(public_path().'/'.$file->path, $file->filename);
     }
 
 

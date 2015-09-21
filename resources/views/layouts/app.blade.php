@@ -14,6 +14,7 @@
         <meta name="description"
               content="Lorem ipsum dolor sit amet, nihil fabulas et sea, nam posse menandri scripserit no, mei."/>
     @show
+    <meta name="csrf-token" content="<?php echo csrf_token() ?>"/>
 
 		<link href="{{ asset('css/site.css') }}" rel="stylesheet">
         <script src="{{ asset('js/site.js') }}"></script>
