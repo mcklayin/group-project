@@ -1,9 +1,17 @@
 @extends('...layouts.app')
-
+@section('title') Управління статичними блоками групи :: @parent @stop
 @section('content')
+<div class="row">
 <h1>Керування статичними блоками</h1>
 
-<div class="row">
+
+
+@if(Session::get('message'))
+	<div class="message-box bg-primary">
+		{{Session::get('message')}}
+	</div>
+	<br />
+@endif
 
 <a href="/group/manage/blocks/add">Створити</a>
 @if(!empty($data))
@@ -19,7 +27,7 @@
         @foreach($data as $k=>$v)
             <tr>
                 <td>{!! $v['id'] !!}</td>
-                <td>{!! $v['text'] !!}</td>
+                <td>{!! strip_tags($v['text']) !!}</td>
                 <td>{!! $v['updated_at'] or $v['created_at'] !!}</td>
                 <td>
                     <a href="/group/manage/blocks/{!! $v['id'] !!}/edit">Редагувати</a>

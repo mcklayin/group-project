@@ -1,9 +1,16 @@
 @extends('...layouts.app')
-
+@section('title') Управління новинами групи :: @parent @stop
 @section('content')
+<div class="row">
 <h1>Керування новинами</h1>
 
-<div class="row">
+
+@if(Session::get('message'))
+	<div class="message-box bg-primary">
+		{{Session::get('message')}}
+	</div>
+	<br />
+@endif
 
 <a href="/group/manage/news/add">Створити</a>
 @if(!empty($data))
@@ -22,7 +29,9 @@
                 <td>{!! $v['title'] !!}</td>
                 <td>{!! $v['updated_at'] !!}</td>
                 <td>
+
                     <a href="/group/manage/news/{!! $v['id'] !!}/edit">Редагувати</a>
+
                     |
                     <a href="/group/manage/news/{!! $v['id'] !!}/delete">Видалити</a>
                 </td>

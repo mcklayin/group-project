@@ -105,7 +105,7 @@ class User extends Model implements AuthenticatableContract,
             DB::table('user_settings')->insert($array);
 
             //insert role
-            DB::table('user_roles')->insert(array('user_id'=>3));
+            DB::table('user_roles')->insert(array('role_id'=>3, 'user_id'=>$user->id));
         });
     }
 }

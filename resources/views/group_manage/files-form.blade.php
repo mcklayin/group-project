@@ -1,5 +1,5 @@
 @extends('...layouts.app')
-
+@section('title') Додавання файлу:: @parent @stop
 
 
 @section('content')

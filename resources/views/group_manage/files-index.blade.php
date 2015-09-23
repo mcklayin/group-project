@@ -1,5 +1,5 @@
 @extends('...layouts.app')
-
+@section('title') Управління файлами групи :: @parent @stop
 @section('content')
 <h1>Керування файлами</h1>
 

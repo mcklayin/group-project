@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title') Користувачі групи :: @parent @stop
 @section('content')
 @if($data)
   <table>
