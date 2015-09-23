@@ -74,11 +74,12 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
-
+Route::get('admin', array('middleware'=>'auth','uses'=>'Admin\DashboardController@index'));
 /***************    Admin routes  **********************************/
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     # Admin Dashboard
+
     Route::get('dashboard', 'Admin\DashboardController@index');
 
     # Language

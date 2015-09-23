@@ -1,19 +1,23 @@
 @extends('layouts.app')
-
+@section('title') Група - {!! $group->name !!} :: @parent @stop
 @section('content')
+<div class="row">
 <h1>Група - {!! $group->name !!}</h1>
 
-<div class="row">
+
     <div id="stat_blocks">
         {!! $static_blocks !!}
     </div>
-    <a href="/group/getUsers">Користувачі</a>
-    <a href="/group/getNews">Новини</a>
-    <a href="/group/getFiles">Файли</a>
+    <div class="clearfix">
 
-     @if($group->user_id == Auth::user()->id)
-        <a href="/group/manage">Керування групою</a>
-     @endif
+    </div>
+    <a href="/group/getUsers" class="btn btn-info">Користувачі</a>
+    <a href="/group/getNews" class="btn btn-info">Новини</a>
+    <a href="/group/getFiles" class="btn btn-info">Файли</a>
+
+
+    <a href="/group/manage" class="btn btn-success">Керування групою</a>
+
 </div>
 
 @stop

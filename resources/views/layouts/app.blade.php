@@ -18,6 +18,8 @@
 
 		<link href="{{ asset('css/site.css') }}" rel="stylesheet">
         <script src="{{ asset('js/site.js') }}"></script>
+        <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/summernote.min.js') }}"></script>
 
     @yield('styles')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -38,6 +40,12 @@
 @include('partials.footer')
 
 <!-- Scripts -->
+<script>
+
+$(function () {
+            $('textarea').summernote({height: 250});
+});
+</script>
 @yield('scripts')
 
 </body>

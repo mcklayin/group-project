@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title') Файли групи :: @parent @stop
 @section('content')
 @if($files)
   <table>

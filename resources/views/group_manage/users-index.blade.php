@@ -1,11 +1,18 @@
 @extends('...layouts.app')
-
+@section('title') Управління користувачами групи :: @parent @stop
 @section('content')
+<div class="row">
 <h1>Керування користувачами групи</h1>
 
-<div class="row">
 
-<a href="/group/manage/users/add">Додати</a>
+@if(Session::get('message'))
+	<div class="message-box bg-primary">
+		{{Session::get('message')}}
+	</div>
+	<br />
+@endif
+
+<a href="/group/manage/users/add">Додати користувача</a>
 @if(!empty($data))
     <table class="table table-striped">
         <thead>
