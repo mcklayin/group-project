@@ -87,8 +87,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'phone' => [
+            'phone' => 'Не корректний формат номеру телефона (+380951227975)',
         ],
     ],
 

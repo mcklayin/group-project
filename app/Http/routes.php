@@ -1,6 +1,8 @@
 <?php
 
 /****************   Model binding into route **************************/
+use App\User;
+
 Route::model('article', 'App\Article');
 Route::model('group', 'App\Group');
 Route::model('static', 'App\StaticBlocks');
@@ -13,15 +15,32 @@ Route::pattern('slug', '[0-9a-z-_]+');
 
 /***************    Site routes  **********************************/
 Route::get('/', 'HomeController@index');
-Route::get('home', 'HomeController@index');
+Route::get('home', function(){
+    return Redirect::to('/cabinet');
+});
 Route::get('about', 'PagesController@about');
 Route::get('contact', 'PagesController@contact');
 Route::get('articles', 'ArticlesController@index');
 Route::get('article/{slug}', 'ArticlesController@show');
 
 #user cabinet
+Route::get('cabinet/confirm_password/{code}', function($code){
+    $user = User::where('password_confirmation_code','=',$code)->where('password_confirmation_code','!=','')->first();
+    if($user->id && $user->wait_password)
+    {
+        User::where('id','=',$user->id)->update(array('password_confirmation_code'=>'', 'password'=>$user->wait_password,'wait_password'=>''));
+
+        Session::flash('message', 'Пароль успішно змінено');
+        if(Auth::user())
+            return Redirect::to('/cabinet');
+        else
+            return Redirect::to('auth/login');
+    }
+
+});
 Route::get('cabinet/news', 'CabinetController@getGroupNewsFeed');
 Route::get('cabinet/files', 'CabinetController@getGroupFilesFeed');
+Route::any('cabinet/edit_user/{user}/edit', 'CabinetController@edit_user');
 Route::get('cabinet/{user}', 'CabinetController@show');
 Route::get('cabinet', array('as'=>'cabinet','uses'=>'CabinetController@index'));
 

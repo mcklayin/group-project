@@ -9,27 +9,13 @@
         </div>
     </div>
 
-<h1>Контактні дані користувача - {!! $arrData['user']['name'] !!}</h1>
-    <ul>
-     @foreach($arrData['user'] as $k=>$v)
-        <li>
-            {!! $k !!} - {!! $v !!}
-        </li>
-     @endforeach
-    </ul>
+<h1>Контактні дані:</h1>
+        {!! $arrData['user']['email'] !!}<br />
+        {!! $arrData['user']['phone'] !!}<br />
 
 @if(!empty($arrData['user_groups']))
 <h1>Групи:</h1>
-    <ul>
-         @foreach($arrData['user_groups']->toArray() as $k=>$v)
-
-                 <li>
-                      {!! $k !!} - {!! $v !!}
-                 </li>
-
-
-         @endforeach
-      </ul>
+    <a href="/group" class="btn btn-info">{!! $arrData['user_groups']->first()->name !!}</a>
 
 @endif
 

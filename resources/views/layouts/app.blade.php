@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%;">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,13 +31,15 @@
 
     <link rel="shortcut icon" href="{!! asset('assets/site/ico/favicon.ico')  !!} ">
 </head>
-<body>
+<body style="height:100%;">
+<div id="wrapper" style="min-height:100%;position:relative;">
 @include('partials.nav')
 
-<div class="container">
+<div class="container"  style="min-height: 100%;padding-bottom: 90px;">
 @yield('content')
 </div>
 @include('partials.footer')
+</div>
 
 <!-- Scripts -->
 <script>

@@ -14917,3 +14917,18 @@ if (typeof jQuery === 'undefined') {
   };
 
 }(jQuery));
+
+
+jQuery(document).ready(function(){
+
+    jQuery('#show_edit_user').on('click',function(){
+        if(jQuery('#edit_user').css('display') == 'none')
+        {
+            jQuery('#edit_user').show();
+        }
+        else
+        {
+            jQuery('#edit_user').hide();
+        }
+    });
+})

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Files;
+use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\UserSettingsRequest;
 use App\User;
 
@@ -15,6 +16,9 @@ use App\UserSettings;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 
@@ -50,7 +54,7 @@ class CabinetController extends Controller
             return json_encode($arrData, JSON_FORCE_OBJECT);
         }
 
-        return view('cabinet.index', compact('arrData'));
+        return view('cabinet.index', compact('arrData', 'user'));
     }
     
     /*
@@ -164,5 +168,41 @@ class CabinetController extends Controller
             }
 
         }
+    }
+
+    public function edit_user(UserRequest $request, User $user)
+    {
+        if(Auth::user()->id == $user->id)
+        {
+           $input =  $request->except('password');
+
+           if($request->get('password'))
+           {
+               $input['wait_password'] = Hash::make($request->get('password'));
+               $input['password_confirmation_code'] = md5(time());
+               $message = "Дані успішно оновлено. Для пітдверждення нового паролю дотримуйтесь інструкції, що були вислані вам на вашу поштову адресу";
+
+               Mail::send('emails.password_confirm', array('hello' => $input['password_confirmation_code']), function ($message) use($user) {
+                   if($user->groups->first())
+                       $message->from('groupsite@gmail.com', "Група - " . $user->groups->first()->name);
+                   else
+                       $message->from('groupsite@gmail.com', "Сайт групи - зміна паролю");
+                   $message->to($user->email)->subject("Зміна паролю");
+               });
+           }
+           else
+           {
+                $message = "Дані успішно оновлено";
+           }
+
+
+           $user->update($input);
+
+           Session::flash('message',$message);
+
+        }
+
+        return Redirect::to('/cabinet');
+
     }
 }

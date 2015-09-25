@@ -19,9 +19,7 @@
                 <li class="{{ (Request::is('cabinet') ? 'active' : '') }}">
                     <a href="{{ URL::to('cabinet') }}">Кабінет користувача</a>
                 </li>
-                <li class="{{ (Request::is('about') ? 'active' : '') }}">
-                    <a href="{{ URL::to('about') }}">Про Нас</a>
-                </li>
+
                 <li class="{{ (Request::is('contact') ? 'active' : '') }}">
                     <a href="{{ URL::to('contact') }}">Контакти</a>
                 </li>
@@ -51,6 +49,9 @@
                                         <a href="{{ URL::to('/group') }}"><i class="fa fa-sign-out"></i> Група</a>
                                     </li>
                                 @endif
+                                <li>
+                                    <a href="{{ URL::to('/cabinet/settings') }}"><i class="fa fa-cog"></i> Налаштування </a>
+                                </li>
                             @endif
                             <li>
                                 <a href="{{ URL::to('auth/logout') }}"><i class="fa fa-sign-out"></i> Вихід</a>
