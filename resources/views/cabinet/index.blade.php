@@ -4,37 +4,51 @@
 @section('title') Кабінет :: @parent @stop
 @section('content')
 
-<!-- todo dropdown form with configs -->
-<a href="#">Налаштування</a>
+
+
+
 
     <div class="row">
+
         <div class="page-header">
-         <h2>Кабінет корисуствача</h2>
+         <h2>Кабінет корисуствача - {!! $arrData['user']['name'] !!}</h2>
         </div>
     </div>
 
+@if(Session::get('message'))
+	<div class="message-box bg-primary">
+		{{Session::get('message')}}
+	</div>
+@endif
+    <h4>Контактні дані:</h4>
+    {!! $arrData['user']['name'] !!}<br />
+    {!! $arrData['user']['email'] !!}<br />
+    {!! $arrData['user']['phone'] !!}<br />
 
-    <ul>
-     @foreach($arrData['user'] as $k=>$v)
-        <li>
-            {!! $k !!} - {!! $v !!}
-        </li>
-     @endforeach
-    </ul>
+    <a href="#" id="show_edit_user">Редагувати</a>
+    <div id="edit_user" style="display:none;margin-top:10px;">
+      <div class="col-md-4 col-sm-4" style="padding-left:0px;">
+        @include('cabinet.user_edit', $user)
+      </div>
+    </div>
 
+<div class="clearfix">
+
+</div>
 @if(!empty($arrData['user_groups']))
-<h1>Мої групи:</h1>
-    <ul>
-         @foreach($arrData['user_groups']->toArray() as $k=>$v)
+<h3>Моя група</h3>
 
-                 <li>
-                      {!! $k !!} - {!! $v !!}
-                 </li>
+      <a href="/group" class="btn btn-info">{!! $arrData['user_groups']->first()->name !!}</a>
 
 
-         @endforeach
-      </ul>
+@endif
 
+@if(!empty($errors->all()))
+<script>
+
+        $('#edit_user').show();
+
+</script>
 @endif
 @endsection
 @stop

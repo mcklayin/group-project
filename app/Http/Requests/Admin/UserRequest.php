@@ -37,6 +37,8 @@ class UserRequest extends FormRequest {
 				return [
 					'name' => 'required|min:3',
 					'email' => 'required|email|unique:users,email,'.$user->id,
+                    'password' => 'sometimes|min:6',
+                    'phone' => 'sometimes|phone'
 				];
 			}
 			default:break;

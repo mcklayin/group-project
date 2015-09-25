@@ -1,8 +1,5 @@
-<div id="footer">
-    <div class="container">
-        <p class="text-muted credit"><span style="text-align: left; float: left">&copy; 2015 <a href="#">Laravel
-                    5 Starter Site</a></span> <span class="hidden-phone"
-                                                    style="text-align: right; float: right">Powered by: <a
-                        href="http://laravel.com/" alt="Laravel 5.1">Laravel 5.1</a></span></p>
-    </div>
+<div id="footer" style="bottom: 0;position: absolute;margin-left: -120px;left: 50%;height:30px;width:300px;word-wrap:break-word;word-break: break-all">
+
+        <p class="text-muted credit" style="width:300px;"><span style="text-align: left; ">&copy; 2015  by McklayiN and Vampirkod</span></p>
+
 </div>

@@ -16344,3 +16344,8 @@ label {
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
 }
+
+.bg-primary{
+    padding:10px;
+    border-radius:4px;
+}
