@@ -10,10 +10,24 @@
         "yajra/laravel-datatables-oracle" : "~5.0",
         "barryvdh/laravel-debugbar": "^2.0@dev",
         "laravelcollective/html": "5.1.*",
-        "cviebrock/eloquent-sluggable": "dev-master"
+        "cviebrock/eloquent-sluggable": "dev-master",
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "graham-campbell/flysystem": "~3.1",
+        "league/flysystem-dropbox": "~1.0",
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "dropbox/dropbox-sdk": "1.1.*",
+
+        "graham-campbell/manager": "^2.2"
     },
+    "repositories": [{
+
+        "url": "https://github.com/mcklayin/TurboSms.git",
+        "type": "git"
+
+    }],
     "require-dev": {
         "fzaninotto/faker": "~1.4",
+        "newway/turbo-sms": "dev-master",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1"

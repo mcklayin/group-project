@@ -1,0 +1,8 @@
+@TODO
+1)group/manage  -
+    1.1)add privileges management
+    1.2)add search by user email to http://univer.dev/group/manage/users/add
+
+2)налаштування
+
+3)http://univer.dev/group/getUsers  добавить отправку email юзеру

@@ -28,6 +28,12 @@
 
 <script type="text/javascript">
     var oTable;
+    if('{!! $params !!}')
+        var params = $.parseJSON('{!! $params !!}');
+    else
+        var params = new Object();
+
+
     $(document).ready(function () {
         oTable = $('#table').DataTable({
             "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
@@ -52,13 +58,24 @@
             },
             "processing": true,
             "serverSide": true,
-            "ajax": "{!! $type !!}/data",
+            "destroy": true,
+            "bDestroy": true,
+            "ajax": {
+                "url": "{!! $type !!}/data",
+                'type':'GET',
+                'data':{
+                    params
+                }
+            },
+
             "fnDrawCallback": function (oSettings) {
                 $(".iframe").colorbox({
                     iframe: true,
                     width: "80%",
                     height: "80%",
                     onClosed: function () {
+                        //oTable.destroy();
+
                         oTable.ajax.reload();
                     }
                 });

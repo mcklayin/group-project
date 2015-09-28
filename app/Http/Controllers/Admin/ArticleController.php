@@ -16,6 +16,9 @@ class ArticleController extends AdminController {
     public function __construct()
     {
         view()->share('type', 'article');
+        view()->share('params', '');
+
+
     }
      /*
     * Display a listing of the resource.
@@ -25,7 +28,10 @@ class ArticleController extends AdminController {
     public function index()
     {
         // Show the page
-        return view('admin.article.index');
+        $group_id = Input::get('group_id');
+        view()->share('params', json_encode(array('group_id'=>$group_id)));
+
+        return view('admin.article.index', compact('group_id'));
     }
 
     /**
@@ -138,10 +144,21 @@ class ArticleController extends AdminController {
      */
     public function data()
     {
+
+        $params = Input::get('params');
+        $group_id = $params['group_id'];
+
         $article = Article::join('languages', 'languages.id', '=', 'articles.language_id')
             ->join('article_categories', 'article_categories.id', '=', 'articles.article_category_id')
             ->select(array('articles.id','articles.title','article_categories.title as category', 'languages.name', 
                 'articles.created_at'));
+
+        if($group_id)
+        {
+            $article->where('group_id', '=',$group_id);
+        }
+
+
 
         return Datatables::of($article)
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/article/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>

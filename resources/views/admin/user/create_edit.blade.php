@@ -51,6 +51,13 @@
                 <span class="help-block">{{ $errors->first('password_confirmation', ':message') }}</span>
             </div>
         </div>
+          <div class="form-group  {{ $errors->has('group_id') ? 'has-error' : '' }}">
+                    {!! Form::label('group_id', trans("admin/group.group"), array('class' => 'control-label')) !!}
+                    <div class="controls">
+                        {!! Form::select('group_id', $groups, @isset($user) ? $user->group_id : '0', array('class' => 'form-control')) !!}
+                        <span class="help-block">{{ $errors->first('group_id', ':message') }}</span>
+                    </div>
+        </div>
         <div class="form-group  {{ $errors->has('confirmed') ? 'has-error' : '' }}">
             {!! Form::label('confirmed', trans("admin/users.active_user"), array('class' => 'control-label')) !!}
             <div class="controls">

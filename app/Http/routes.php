@@ -1,34 +1,104 @@
 <?php
 
 /****************   Model binding into route **************************/
+use App\User;
+
 Route::model('article', 'App\Article');
+Route::model('group', 'App\Group');
+Route::model('static', 'App\StaticBlocks');
+Route::model('file', 'App\Files');
 Route::model('articlecategory', 'App\ArticleCategory');
 Route::model('language', 'App\Language');
-Route::model('photoalbum', 'App\PhotoAlbum');
-Route::model('photo', 'App\Photo');
 Route::model('user', 'App\User');
 Route::pattern('id', '[0-9]+');
 Route::pattern('slug', '[0-9a-z-_]+');
 
 /***************    Site routes  **********************************/
 Route::get('/', 'HomeController@index');
-Route::get('home', 'HomeController@index');
+Route::get('home', function(){
+    return Redirect::to('/cabinet');
+});
 Route::get('about', 'PagesController@about');
 Route::get('contact', 'PagesController@contact');
 Route::get('articles', 'ArticlesController@index');
 Route::get('article/{slug}', 'ArticlesController@show');
-Route::get('video/{id}', 'VideoController@show');
-Route::get('photo/{id}', 'PhotoController@show');
+
+#user cabinet
+Route::get('cabinet/confirm_password/{code}', function($code){
+    $user = User::where('password_confirmation_code','=',$code)->where('password_confirmation_code','!=','')->first();
+    if($user->id && $user->wait_password)
+    {
+        User::where('id','=',$user->id)->update(array('password_confirmation_code'=>'', 'password'=>$user->wait_password,'wait_password'=>''));
+
+        Session::flash('message', 'Пароль успішно змінено');
+        if(Auth::user())
+            return Redirect::to('/cabinet');
+        else
+            return Redirect::to('auth/login');
+    }
+
+});
+Route::get('cabinet/news', 'CabinetController@getGroupNewsFeed');
+Route::get('cabinet/files', 'CabinetController@getGroupFilesFeed');
+Route::any('cabinet/edit_user/{user}/edit', 'CabinetController@edit_user');
+Route::get('cabinet/{user}', 'CabinetController@show');
+Route::get('cabinet', array('as'=>'cabinet','uses'=>'CabinetController@index'));
+
+#GROUP CONTROLLER
+Route::group(['middleware' => ['auth','group']], function () {
+
+    Route::get('group/getFile/{file}', 'GroupController@getFile');
+    Route::get('group/getFiles', 'GroupController@getFiles');
+    Route::get('group/getNews', 'GroupController@getNews');
+    Route::get('group/getUsers', 'GroupController@getUsers');
+    Route::get('group/getStaticBlocks', 'GroupController@getStaticBlocks');
+    Route::get('group', array('uses'=>'GroupController@index'));
+
+});
+
+
+#Group Manage
+Route::group(['middleware' => ['auth','group', 'group_roles']], function () {
+
+    #News
+    Route::get('group/manage/news', 'GroupManageController@news');
+    Route::any('group/manage/news/add', 'GroupManageController@addNews');
+    Route::any('group/manage/news/{article}/edit', 'GroupManageController@editNews');
+    Route::any('group/manage/news/{article}/delete', 'GroupManageController@deleteNews');
+
+    #Static Blocks
+    Route::get('group/manage/blocks', 'GroupManageController@staticBlocks');
+    Route::any('group/manage/blocks/add', 'GroupManageController@addStaticBlock');
+    Route::any('group/manage/blocks/{static}/edit', 'GroupManageController@editStaticBlock');
+    Route::any('group/manage/blocks/{static}/delete', 'GroupManageController@deleteStaticBlock');
+
+    #Files
+    Route::get('group/manage/files', 'GroupManageController@files');
+    Route::any('group/manage/files/add', 'GroupManageController@addFile');
+    Route::any('group/manage/files/{file}/delete', 'GroupManageController@deleteFile');
+
+    #Users
+    Route::get('group/manage/users', 'GroupManageController@users');
+    Route::any('group/manage/users/add', 'GroupManageController@addUser');
+    Route::any('group/manage/users/{user}/edit', 'GroupManageController@editUser');
+    Route::any('group/manage/users/{user}/delete', 'GroupManageController@deleteUser');
+
+    #Sends
+    Route::any('group/manage/sends', 'GroupManageController@makeSend');
+
+    Route::get('group/manage', array('uses' => 'GroupManageController@manage'));
+});
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
-
+Route::get('admin', array('middleware'=>'auth','uses'=>'Admin\DashboardController@index'));
 /***************    Admin routes  **********************************/
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     # Admin Dashboard
+
     Route::get('dashboard', 'Admin\DashboardController@index');
 
     # Language
@@ -43,7 +113,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('articlecategory/{articlecategory}/show', 'Admin\ArticleCategoriesController@show');
     Route::get('articlecategory/{articlecategory}/edit', 'Admin\ArticleCategoriesController@edit');
     Route::get('articlecategory/{articlecategory}/delete', 'Admin\ArticleCategoriesController@delete');
-    Route::get('articlecategory/reorder', 'ArticleCategoriesController@getReorder');
+    Route::get('articlecategory/reorder', 'Admin\ArticleCategoriesController@getReorder');
     Route::resource('articlecategory', 'Admin\ArticleCategoriesController');
 
     # Articles
@@ -54,24 +124,34 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('article/reorder', 'Admin\ArticleController@getReorder');
     Route::resource('article', 'Admin\ArticleController');
 
-    # Photo Album
-    Route::get('photoalbum/data', 'Admin\PhotoAlbumController@data');
-    Route::get('photoalbum/{photoalbum}/show', 'Admin\PhotoAlbumController@show');
-    Route::get('photoalbum/{photoalbum}/edit', 'Admin\PhotoAlbumController@edit');
-    Route::get('photoalbum/{photoalbum}/delete', 'Admin\PhotoAlbumController@delete');
-    Route::resource('photoalbum', 'Admin\PhotoAlbumController');
+    #File
+    Route::get('file/data', 'Admin\FileController@data');
+    Route::get('file/{file}/show', 'Admin\FileController@show');
+    Route::get('file/{file}/edit', 'Admin\FileController@edit');
+    Route::get('file/{file}/delete', 'Admin\FileController@delete');
+    Route::get('file', 'Admin\FileController@index');
 
-    # Photo
-    Route::get('photo/data', 'Admin\PhotoController@data');
-    Route::get('photo/{photo}/show', 'Admin\PhotoController@show');
-    Route::get('photo/{photo}/edit', 'Admin\PhotoController@edit');
-    Route::get('photo/{photo}/delete', 'Admin\PhotoController@delete');
-    Route::resource('photo', 'Admin\PhotoController');
+
+    #Group
+    Route::get('group/data', 'Admin\GroupController@data');
+    Route::get('group/{group}/show', 'Admin\GroupController@show');
+    Route::get('group/{group}/edit', 'Admin\GroupController@edit');
+    Route::get('group/{group}/delete', 'Admin\GroupController@delete');
+    Route::resource('group', 'Admin\GroupController');
+
+    #Static Blocks
+    Route::get('static/data', 'Admin\StaticBlocksController@data');
+    Route::get('static/{static}/show', 'Admin\StaticBlocksController@show');
+    Route::get('static/{static}/edit', 'Admin\StaticBlocksController@edit');
+    Route::get('static/{static}/delete', 'Admin\StaticBlocksController@delete');
+    Route::resource('static', 'Admin\StaticBlocksController');
+
 
     # Users
     Route::get('user/data', 'Admin\UserController@data');
     Route::get('user/{user}/show', 'Admin\UserController@show');
     Route::get('user/{user}/edit', 'Admin\UserController@edit');
     Route::get('user/{user}/delete', 'Admin\UserController@delete');
+    Route::get('user/{user}/deleteFromGroup/{id}', 'Admin\UserController@deleteFromGroup');
     Route::resource('user', 'Admin\UserController');
 });

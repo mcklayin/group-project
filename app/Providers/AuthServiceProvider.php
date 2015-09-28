@@ -27,5 +27,10 @@ class AuthServiceProvider extends ServiceProvider
         parent::registerPolicies($gate);
 
         //
+        $gate->define('update-article', function ($user, $article) {
+            return $user->id === $article->user_id;
+        });
+
+
     }
 }

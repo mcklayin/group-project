@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="form-group  {{ $errors->has('username') ? 'has-error' : '' }}">
-                {!! Form::label('username', 'Username', array('class' => 'control-label')) !!}
+                {!! Form::label('username', 'Нікнейм', array('class' => 'control-label')) !!}
                 <div class="controls">
                     {!! Form::text('username', null, array('class' => 'form-control')) !!}
                     <span class="help-block">{{ $errors->first('username', ':message') }}</span>
@@ -36,14 +36,14 @@
                 </div>
             </div>
             <div class="form-group  {{ $errors->has('password') ? 'has-error' : '' }}">
-                {!! Form::label('password', "Password", array('class' => 'control-label')) !!}
+                {!! Form::label('password', "Пароль", array('class' => 'control-label')) !!}
                 <div class="controls">
                     {!! Form::password('password', array('class' => 'form-control')) !!}
                     <span class="help-block">{{ $errors->first('password', ':message') }}</span>
                 </div>
             </div>
             <div class="form-group  {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                {!! Form::label('password_confirmation', "Confirm Password", array('class' => 'control-label')) !!}
+                {!! Form::label('password_confirmation', "Повторіть пароль", array('class' => 'control-label')) !!}
                 <div class="controls">
                     {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
                     <span class="help-block">{{ $errors->first('password_confirmation', ':message') }}</span>
@@ -52,7 +52,7 @@
             <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
                     <button type="submit" class="btn btn-primary">
-                        Register
+                        Зареєструватися
                     </button>
                 </div>
             </div>

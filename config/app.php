@@ -15,6 +15,8 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    'allow_users_upload_files' => env('ALLOW_USERS_UPLOAD_FILES', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -52,7 +54,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ua',
 
     /*
     |--------------------------------------------------------------------------
@@ -137,6 +139,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
+
+
         /*
          * Application Service Providers...
          */
@@ -147,8 +152,12 @@ return [
 
         yajra\Datatables\DatatablesServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        Newway\TurboSms\ServiceProvider::class,
+
+        App\Providers\DropboxServiceProvider::class,
 
     ],
 
@@ -198,6 +207,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'SMS'  => Newway\TurboSms\Facade::class,
 
         'Datatables' => yajra\Datatables\Datatables::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,

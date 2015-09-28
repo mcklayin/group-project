@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%;">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +14,12 @@
         <meta name="description"
               content="Lorem ipsum dolor sit amet, nihil fabulas et sea, nam posse menandri scripserit no, mei."/>
     @show
+    <meta name="csrf-token" content="<?php echo csrf_token() ?>"/>
 
 		<link href="{{ asset('css/site.css') }}" rel="stylesheet">
         <script src="{{ asset('js/site.js') }}"></script>
+        <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/summernote.min.js') }}"></script>
 
     @yield('styles')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -26,17 +29,25 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="{!! asset('assets/site/ico/favicon.ico')  !!} ">
+    <link rel="shortcut icon" href="{!! asset('favicon.png')  !!} ">
 </head>
-<body>
+<body style="height:100%;">
+<div id="wrapper" style="min-height:100%;position:relative;">
 @include('partials.nav')
 
-<div class="container">
+<div class="container"  style="min-height: 100%;padding-bottom: 90px;">
 @yield('content')
 </div>
 @include('partials.footer')
+</div>
 
 <!-- Scripts -->
+<script>
+
+$(function () {
+            $('textarea').summernote({height: 250});
+});
+</script>
 @yield('scripts')
 
 </body>
