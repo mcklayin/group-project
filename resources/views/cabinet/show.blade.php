@@ -15,7 +15,7 @@
 
 @if(!empty($arrData['user_groups']))
 <h1>Групи:</h1>
-    <a href="/group" class="btn btn-info">{!! $arrData['user_groups']->first()->name !!}</a>
+    <a href="/group" class="btn btn-info">{!! $arrData['user_groups']->name !!}</a>
 
 @endif
 

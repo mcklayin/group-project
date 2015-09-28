@@ -49,6 +49,7 @@ class CabinetController extends Controller
         $arrData = $this->getUserData($user);
 
 
+
         if ($request->ajax())
         {
             return json_encode($arrData, JSON_FORCE_OBJECT);
