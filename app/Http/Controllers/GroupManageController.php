@@ -368,7 +368,12 @@ class GroupManageController extends Controller
         //check access to delete files
         if($this->checkPrivileges(8))
         {
+            $disk = Storage::disk('dropbox');
+            $disk->delete($file->path);
 
+            $file->delete();
+
+            return Redirect::to('/group/manage/files');
         }
     }
 

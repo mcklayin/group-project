@@ -2,7 +2,7 @@
 @section('title') Новини групи :: @parent @stop
 @section('content')
 @if($news)
-  <table>
+  <table class="table table-striped">
     <thead>
         <tr>
             <th>

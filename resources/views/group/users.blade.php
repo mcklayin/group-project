@@ -2,7 +2,7 @@
 @section('title') Користувачі групи :: @parent @stop
 @section('content')
 @if($data)
-  <table>
+  <table class="table table-striped">
     <thead>
         <tr>
             <th>

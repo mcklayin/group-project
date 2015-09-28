@@ -2,7 +2,7 @@
 @section('title') Файли групи :: @parent @stop
 @section('content')
 @if($files)
-  <table>
+  <table class="table table-striped">
     <thead>
         <tr>
             <th>
