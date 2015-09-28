@@ -2,7 +2,7 @@
 
 return [
 	'login' => 'Вхід',
-	'login_to_account' => 'Віхд в аккаунт',
+	'login_to_account' => 'Вхід в аккаунт',
 	'submit' => 'Відправити',
 	'register' => 'Створити новий акаунт',
 	'remember' => 'Запам\'ятати',
