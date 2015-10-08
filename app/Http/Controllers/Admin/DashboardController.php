@@ -18,7 +18,7 @@ class DashboardController extends AdminController {
 
 	public function index()
 	{
-        $title = "Dashboard";
+        $title = "Панель Адміністратора";
 
         $news = Article::count();
         $newscategory = ArticleCategory::count();
