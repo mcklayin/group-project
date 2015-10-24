@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-inverse">
+<!--<nav class="navbar navbar-default navbar-inverse">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -62,4 +62,12 @@
             </ul>
         </div>
     </div>
-</nav>
+</nav> -->
+<md-toolbar md-scroll-shrink ng-if="true" class="md-whiteframe-z1">
+    <div class="md-toolbar-tools">
+        <h3>
+            <md-icon md-svg-src="img/icons/bookshelf.svg" style="width:36px;height:36px; margin:0 10px"></md-icon>
+            <span style="color:#fff">Group Share</span>
+        </h3>
+    </div>
+</md-toolbar>

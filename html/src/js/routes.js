@@ -3,7 +3,7 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
     $urlRouterProvider.otherwise("/");
     //
     // Now set up the states
-    $stateProvider.state('state1', {
+    $stateProvider.state('state1', { 
       url: "/state1",
       templateUrl: "partials/state1.html"
     })

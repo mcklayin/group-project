@@ -1,1 +1,21 @@
-<h2>Register page</h2>
+<div layout="column" layout-align="center center" class="main-page">
+    <h2 class="md-display-1">Реєстрація</h2>
+    <form name="registerForm" class="form reg-form">
+        <md-input-container >
+            <!-- Use floating placeholder instead of label -->
+            <md-icon md-svg-src="images/icons/email.svg" class="email"></md-icon>
+            <input ng-model="registerForm.email" type="email" placeholder="E-mail Адреса(обовязково)" ng-required="true">
+            <!--<div ng-messages="registerForm.email.$error" class="ng-message">-->
+                <!--<div ng-message="required">This is required.</div>-->
+            <!--</div>-->
+        </md-input-container>
+        <md-input-container md-no-float>
+            <md-icon md-svg-src="images/icons/phone.svg" class="phone"></md-icon>
+            <input ng-model="registerFor.phone" type="text" placeholder="Телефоний номер" ng-required="true">
+            <!--<div ng-messages="registerForm.phone.$error" class="ng-message">-->
+                <!--<div ng-message="required">This is required.</div>-->
+            <!--</div>-->
+        </md-input-container>
+        <md-button ng-submit="this.submit()">Підвердити</md-button>
+    </form>
+</div>

@@ -6594,3 +6594,22 @@ md-content {
   margin: 16px;
   box-sizing: border-box;
 }
+.main-page {
+  padding-top: 200px;
+}
+.form.reg-form {
+  padding: 15px;
+  width: 400px;
+}
+.form.reg-form md-input-container.md-input-invalid > md-icon {
+  color: #f00;
+}
+.form.reg-form md-icon.phone {
+  color: #01579b;
+}
+.form.reg-form md-icon.email {
+  color: #004d00;
+}
+.form.reg-form .ng-message {
+  margin-left: 40px;
+}
