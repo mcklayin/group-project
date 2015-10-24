@@ -1,3 +1,8 @@
+ <style>
+    .help-block{
+        color:red;
+    }
+ </style>
  {!! Form::model($user, array('url' => URL::to('cabinet/edit_user') . '/' . $user->id.'/edit', 'method' => 'patch','id'=>'fupload', 'class' => 'bf')) !!}
 
         <div class="form-group">
@@ -5,6 +10,14 @@
             <div class="controls">
                  {!! Form::text('name',null, array('class' => 'form-control')) !!}
                  <span class="help-block">{{ $errors->first('name', ':message') }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('fio', 'Прізвище', array('class' => 'control-label')) !!}
+            <div class="controls">
+                 {!! Form::text('fio',null, array('class' => 'form-control')) !!}
+                 <span class="help-block">{{ $errors->first('fio', ':message') }}</span>
             </div>
         </div>
 
