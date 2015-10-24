@@ -35,6 +35,13 @@
                     <span class="help-block">{{ $errors->first('email', ':message') }}</span>
                 </div>
             </div>
+             <div class="form-group  {{ $errors->has('phone') ? 'has-error' : '' }}">
+                {!! Form::label('phone', 'Телефон', array('class' => 'control-label')) !!}
+                <div class="controls">
+                    {!! Form::text('phone', null, array('class' => 'form-control')) !!}
+                    <span class="help-block">{{ $errors->first('phone', ':message') }}</span>
+                </div>
+            </div>
             <div class="form-group  {{ $errors->has('password') ? 'has-error' : '' }}">
                 {!! Form::label('password', "Пароль", array('class' => 'control-label')) !!}
                 <div class="controls">
