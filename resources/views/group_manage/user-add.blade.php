@@ -19,7 +19,7 @@
 
             <div class="form-group  {{ $errors->has('privileges') ? 'has-error' : '' }}">
                     @if($all_users)
-                      <select name="user[]" multiple class="form-control" >
+                      <select name="user[]" multiple class="form-control" style="min-height:300px;">
                         @foreach($all_users as $k=>$v)
                           @if(in_array($v->id, $users))
                             <option value="{!! $v->id !!}">

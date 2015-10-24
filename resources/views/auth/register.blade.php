@@ -21,6 +21,13 @@
                     <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                 </div>
             </div>
+            <div class="form-group  {{ $errors->has('fio') ? 'has-error' : '' }}">
+                {!! Form::label('fio', 'Прізвище', array('class' => 'control-label')) !!}
+                <div class="controls">
+                    {!! Form::text('fio', null, array('class' => 'form-control')) !!}
+                    <span class="help-block">{{ $errors->first('fio', ':message') }}</span>
+                </div>
+            </div>
             <div class="form-group  {{ $errors->has('username') ? 'has-error' : '' }}">
                 {!! Form::label('username', 'Нікнейм', array('class' => 'control-label')) !!}
                 <div class="controls">
@@ -33,6 +40,13 @@
                 <div class="controls">
                     {!! Form::text('email', null, array('class' => 'form-control')) !!}
                     <span class="help-block">{{ $errors->first('email', ':message') }}</span>
+                </div>
+            </div>
+             <div class="form-group  {{ $errors->has('phone') ? 'has-error' : '' }}">
+                {!! Form::label('phone', 'Телефон', array('class' => 'control-label')) !!}
+                <div class="controls">
+                    {!! Form::text('phone', null, array('class' => 'form-control')) !!}
+                    <span class="help-block">{{ $errors->first('phone', ':message') }}</span>
                 </div>
             </div>
             <div class="form-group  {{ $errors->has('password') ? 'has-error' : '' }}">

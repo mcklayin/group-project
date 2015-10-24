@@ -87,19 +87,23 @@ class User extends Model implements AuthenticatableContract,
             $array = array(
                 array(
                     'user_id'=>$user->id,
-                    'show_group_news_feed'=>1
+                    'key' => 'show_group_news_feed',
+                    'value'=>1
                 ),
                 array(
                     'user_id'=>$user->id,
-                    'show_group_files_feed'=>1
+                    'key' => 'show_group_files_feed',
+                    'value'=>1
                 ),
                 array(
                     'user_id'=>$user->id,
-                    'news_group_feed_count'=>5
+                    'key' => 'news_group_feed_count',
+                    'value'=>5
                 ),
                 array(
                     'user_id'=>$user->id,
-                    'files_group_feed_count'=>5
+                    'key' => 'files_group_feed_count',
+                    'value'=>5
                 ),
             );
             DB::table('user_settings')->insert($array);

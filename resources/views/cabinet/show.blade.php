@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="page-header">
-         <h2>Кабінет користувача - {!! $arrData['user']['name'] !!}</h2>
+         <h2>Кабінет користувача - {!! $arrData['user']['name'] !!} {!! $arrData['user']['fio'] !!}</h2>
         </div>
     </div>
 

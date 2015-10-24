@@ -495,7 +495,7 @@ class GroupManageController extends Controller
                         UserGroups::insert(array('user_id'=>$v,'group_id'=>$this->group->id));
                     }
 
-                    $message = 'Користувач успышно доданий до групи';
+                    $message = 'Користувач успiшно доданий до групи';
                     if ($request->ajax()) {
                         return Response::json(array('status' => 'ok', 'message' => $message));
                     }

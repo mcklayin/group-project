@@ -11,9 +11,7 @@
             <th>
                 Назва файлу
             </th>
-            <th>
-                 Вступ
-            </th>
+          
             <th>
 
             </th>
@@ -28,9 +26,7 @@
             <td>
                 {!! $v->filename !!}
             </td>
-            <td>
-                {!! $v->introduction !!}
-            </td>
+       
             <td>
                 <a href="/group/getFile/{!! $v->id !!}">Переглянути</a>
             </td>
