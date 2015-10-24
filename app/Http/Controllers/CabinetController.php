@@ -173,6 +173,8 @@ class CabinetController extends Controller
 
     public function edit_user(UserRequest $request, User $user)
     {
+
+
         if(Auth::user()->id == $user->id)
         {
            $input =  $request->except('password');
