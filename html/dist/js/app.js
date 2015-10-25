@@ -2,12 +2,16 @@
 var angular = require('angular');
 require('angular-animate');
 require('angular-aria');
-routes = require('./routes');   
+var supRoutes = require('./sup/routes');
+var mainRoutes = require('./main/routes'); 
 //load angular and modules    
 
-angular.module('app', [require('angular-material'),require('angular-ui-router')])
-  .config(routes);    
-},{"./routes":2,"angular":11,"angular-animate":4,"angular-aria":6,"angular-material":8,"angular-ui-router":9}],2:[function(require,module,exports){
+angular.module('app-sup', [require('angular-material'),require('angular-ui-router')])
+  .config(supRoutes);
+
+angular.module('app-main', [require('angular-material'),require('angular-ui-router')])
+  .config(mainRoutes);    
+},{"./main/routes":2,"./sup/routes":3,"angular":12,"angular-animate":5,"angular-aria":7,"angular-material":9,"angular-ui-router":10}],2:[function(require,module,exports){
 module.exports = ['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
@@ -24,20 +28,40 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
         console.log('index page');
       }
     })
+   
+}];
+},{}],3:[function(require,module,exports){
+module.exports = ['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/");
+    //
+    // Now set up the states
+    $stateProvider
+    .state('index', {
+      url: "/",
+      templateUrl: "views/sup/index.tpl.html",
+      controller: function() {
+        console.log('index page');
+      }
+    })
     .state('login', {
       url: "/login",
-      templateUrl: "views/login.tpl.html",
+      templateUrl: "views/sup/login.tpl.html",
       controller: function() {
         console.log('login page');
       }
     })
     .state('register', {
       url: '/register',
-      templateUrl: "views/register.tpl.html"    
+      templateUrl: "views/sup/register.tpl.html"     
+    })
+    .state('contacts', {
+      url: '/contacts',
+      templateUrl: "views/sup/contacts.tpl.html"
     })
    
 }];
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -3967,11 +3991,11 @@ angular.module('ngAnimate', [])
 
 })(window, window.angular);
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 require('./angular-animate');
 module.exports = 'ngAnimate';
 
-},{"./angular-animate":3}],5:[function(require,module,exports){
+},{"./angular-animate":4}],6:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -4370,11 +4394,11 @@ ngAriaModule.directive('ngShow', ['$aria', function($aria) {
 
 })(window, window.angular);
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 require('./angular-aria');
 module.exports = 'ngAria';
 
-},{"./angular-aria":5}],7:[function(require,module,exports){
+},{"./angular-aria":6}],8:[function(require,module,exports){
 /*!
  * Angular Material Design
  * https://github.com/angular/material
@@ -26637,7 +26661,7 @@ angular.module("material.core").constant("$MD_THEME_CSS", "md-autocomplete.md-TH
 
 
 })(window, window.angular);
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 // Should already be required, here for clarity
 require('angular');
 
@@ -26651,7 +26675,7 @@ require('./angular-material');
 // Export namespace
 module.exports = 'ngMaterial';
 
-},{"./angular-material":7,"angular":11,"angular-animate":4,"angular-aria":6}],9:[function(require,module,exports){
+},{"./angular-material":8,"angular":12,"angular-animate":5,"angular-aria":7}],10:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -31022,7 +31046,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -59927,11 +59951,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":10}]},{},[1])
+},{"./angular":11}]},{},[1])
 
 
 //# sourceMappingURL=app.js.map

@@ -21,10 +21,6 @@
             <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">
             <link href="{{ asset('css/style.css') }}" rel="stylesheet">
             <script src="{{ asset('js/summernote.min.js') }}"></script>
-            <script src="{{ asset('js/angular.min.js') }}"></script>
-             <script src="{{ asset('js/angular-aria.min.js') }}"></script>
-             <script src="{{ asset('js/angular-animate.min.js') }}"></script>
-            <script src="{{ asset('js/angular-material.min.js') }}"></script>
             
     
         @yield('styles')
@@ -35,7 +31,14 @@
         
             @include('partials.nav')
             
-            
+            <md-toolbar md-scroll-shrink ng-if="true" class="md-whiteframe-z1">
+                <div class="md-toolbar-tools">
+                    <h3>
+                        <md-icon md-svg-src="img/icons/bookshelf.svg" style="width:36px;height:36px; margin:0 10px"></md-icon>
+                        <span style="color:#fff">Group Share</span>
+                    </h3>
+                </div>
+            </md-toolbar>
             <md-content flex layout-padding>
                 @yield('content')
             </md-content>
@@ -43,13 +46,8 @@
          
     
     <!-- Scripts -->
-    <!-- <script>
-        $(function () {
-                    $('textarea').summernote({height: 250});
-        });
-        var app = angular.module('app', ['ngMaterial']);
-    </script> -->
+   
     @yield('scripts')
-    
+        <!-- <script src="{{ asset('js/app.js') }}"></script> -->
     </body>
 </html>
