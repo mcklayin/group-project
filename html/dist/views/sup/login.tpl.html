@@ -1,1 +1,29 @@
-<h3>LOgin page</h3>
+<div layout="row"  class="main-page" layout-padding>
+    <div flex="100" flex-gt-sm="60" flex-gt-md="33" flex-offset-gt-sm="20"  flex-offset-gt-md="33">
+        <form name="loginForm" class="form log-form" novalidate ng-submit="submit()">
+            <md-content layout-padding="" class="autoScroll">
+                <div layout="col" layout-align="center">
+                    <h2 class="md-display-1">Вхід в аккаунт</h2>
+                </div>
+                <md-input-container class="md-icon-float md-block">
+                    <label class="md-primary">Поштова адреса</label>
+                    <input ng-model="loginForm.email" type="email" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label class="md-primary">Пароль</label>
+                    <input ng-model="loginForm.password" type="password" ng-required="true">
+                </md-input-container>
+                <div layout="col" layout-align="center">
+                    <md-button class="md-raised md-primary" >Вхід</md-button>
+                    <md-button ui-sref="reset">Забули пароль?</md-button>
+                </div>
+                <div layout="col" layout-align="center">
+                    <md-checkbox ng-model="loginForm.remember" class="md-primary">
+                        Запам'ятати
+                        <input type="checkbox" class="hide" ng-checked="loginForm.remember" />
+                    </md-checkbox> 
+                </div>
+            </md-content>
+        </form>
+    </div>
+</div>

@@ -14,10 +14,8 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
     .state('login', {
       url: "/login",
       templateUrl: "views/sup/login.tpl.html",
-      controller: function() {
-        console.log('login page');
-      }
-    })
+      controller: require('./login/loginController')
+    }) 
     .state('register', {
       url: '/register',
       templateUrl: "views/sup/register.tpl.html"     
@@ -25,6 +23,10 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
     .state('contacts', {
       url: '/contacts',
       templateUrl: "views/sup/contacts.tpl.html"
+    })
+    .state('reset', {
+      url: '/reset',
+      templateUrl: "views/sup/reset.tpl.html"
     })
    
 }];

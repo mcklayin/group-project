@@ -16,7 +16,8 @@ var path = {
   stylus:{
     watch: 'html/src/stylus/**/*.styl',
     src: ['html/src/stylus/style.styl', 'html/src/stylus/admin.styl'],
-    dest: 'html/dist/css/'
+    dest: 'html/dist/css/',
+    pup_dest: 'html/dist/css/'
   },
   js: {
     src: 'html/src/js/app.js',
@@ -28,9 +29,12 @@ var path = {
     //  'resources/vendor/angular-material/angular-material.js',
     //  'html/src/js/**/*.js'
     //],
-    dest: "html/dist/js/"
+    dest: "html/dist/js/",
+    pup_dest: "public/js/"
   },
-  html: 'html/dist/*.html'
+  html: 'html/dist/**/*.html',
+  html_watch: 'html/dist/views/**/*.html',
+  html_pup: 'public/views/'
 };
 
 //var defaultTasks = Object.keys({
@@ -89,7 +93,12 @@ gulp.task('stylus', function() {
       .pipe(browserSync.stream());
 });
 
-gulp.task('js', function(){
+gulp.task('html', function() {
+  return gulp.src(path.html_watch)
+    .pipe(gulp.dest(path.html_pup));
+});
+
+gulp.task('js', function() {
   var b = browserify({
     entries: path.js.src,
     debug: true
@@ -103,12 +112,14 @@ gulp.task('js', function(){
     .on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(path.js.dest))
+    .pipe(gulp.dest(path.js.pup_dest))
     .pipe(browserSync.stream());
 });
 gulp.task('watch', function() {
     gulp.watch(path.stylus.watch, ['stylus']);
     gulp.watch(path.js.watch, ['js']);
     gulp.watch(path.html).on('change', browserSync.reload);
+    gulp.watch(path.html_watch, ['html']);
     //defaultTasks.forEach(function(taskName){
     //    gulp.watch('sprites/**/*.png', [taskName]).on('change', browserSync.reload);
     //});

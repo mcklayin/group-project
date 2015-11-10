@@ -1,21 +1,43 @@
-<div layout="column" layout-align="center center" class="main-page">
-    <h2 class="md-display-1">Реєстрація</h2>
-    <form name="registerForm" class="form reg-form">
-        <md-input-container >
-            <!-- Use floating placeholder instead of label -->
-            <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
-            <input ng-model="registerForm.email" type="email" placeholder="E-mail Адреса(обовязково)" ng-required="true">
-            <!--<div ng-messages="registerForm.email.$error" class="ng-message">-->
-                <!--<div ng-message="required">This is required.</div>-->
-            <!--</div>-->
-        </md-input-container>
-        <md-input-container md-no-float>
-            <md-icon md-svg-src="img/icons/ic_phone_24px.svg" class="phone"></md-icon>
-            <input ng-model="registerFor.phone" type="text" placeholder="Телефоний номер" ng-required="true">
-            <!--<div ng-messages="registerForm.phone.$error" class="ng-message">-->
-                <!--<div ng-message="required">This is required.</div>-->
-            <!--</div>-->
-        </md-input-container>
-        <md-button ng-submit="this.submit()">Підвердити</md-button>
-    </form>
+<div layout="row"  class="main-page" layout-padding>
+    <div flex="100" flex-gt-sm="60" flex-gt-md="33" flex-offset-gt-sm="20"  flex-offset-gt-md="33">
+        <form name="registerForm" class="form reg-form">
+            <md-content layout-padding="" class="autoScroll">
+                <div layout="col" layout-align="center">
+                    <h2 class="md-display-1">Реєстрація</h2>    
+                </div>
+                
+                <md-input-container class="md-icon-float md-block">
+                    <label>Ім'я</label>
+                    <input ng-model="user.name" type="text" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Прізвище</label>
+                    <input ng-model="user.fio" type="text">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Нікнейм</label>
+                    <input ng-model="user.username" type="text">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>E-mail Адреса(обовязково)</label>
+                    <input ng-model="user.email" type="text" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Телефон(обовязково)</label>
+                    <input ng-model="user.phone" type="text" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Пароль(обовязково)</label>
+                    <input ng-model="user.password" type="password" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Повторіть пароль(обовязково)</label>
+                    <input ng-model="user.password" type="password" ng-required="true">
+                </md-input-container>
+                <div layout="col" layout-align="center">
+                    <md-button class="md-raised md-primary" ng-submit="this.submit()">Зареєструватися</md-button>
+                </div>
+            </md-content>
+        </form>
+    </div>
 </div>

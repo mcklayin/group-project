@@ -1,0 +1,18 @@
+<div layout="row"  class="main-page" layout-padding>
+    <div flex="100" flex-gt-sm="60" flex-gt-md="33" flex-offset-gt-sm="20"  flex-offset-gt-md="33">
+        <form name="registerForm" class="form log-form">
+            <md-content layout-padding="" class="autoScroll">
+                <div layout="col" layout-align="center">
+                    <h2 class="md-display-1">Відновлення паролю</h2>
+                </div>
+                <md-input-container class="md-icon-float md-block">
+                    <label class="md-primary">Поштова адреса</label>
+                    <input ng-model="user.email" type="text" ng-required="true">
+                </md-input-container>
+                <div layout="col" layout-align="center">
+                    <md-button class="md-raised md-primary" ng-submit="registerForm.submit()">Відправити</md-button>
+                </div>
+            </md-content>
+        </form>
+    </div>
+</div>
