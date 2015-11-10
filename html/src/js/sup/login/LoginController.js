@@ -8,16 +8,16 @@ module.exports = ['$scope','$http',function($scope,$http) {
     console.log('hello');
     console.log(this.loginForm);
     if(this.loginForm.$valid){
-      data._token = $scope.token;
       data.email = this.loginForm.email;
       data.password = this.loginForm.password;
       console.log(data);
       console.log($scope.token);
-      $http.post('/auth/login',data)
-      .then(function(data) { 
+      $http.post('/auth/loginAjax',data)
+        .then(function(data) { 
           console.log(data);
           console.log('success');
-        },function() {
+        },function(data) {
+          console.log(data);
           console.log('fail');
       });
     }

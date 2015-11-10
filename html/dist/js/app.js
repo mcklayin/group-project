@@ -34,10 +34,10 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
    
 }];
 },{}],3:[function(require,module,exports){
-module.exports = function($scope,$mdSidenav) {
+module.exports = function($scope,$mdSidenav,$http) {
   this.toggleSlider = toggleSlider;
-  this.closeSlider = closeSlider; 
-  
+  this.closeSlider = closeSlider;
+  $http.defaults.headers['X-CSRF-TOKEN'] = 'Basic YmVlcDpib29w'
   
   function toggleSlider(navID) {
     $mdSidenav(navID).toggle();
@@ -62,16 +62,19 @@ module.exports = ['$scope','$http',function($scope,$http) {
     console.log('hello');
     console.log(this.loginForm);
     if(this.loginForm.$valid){
-      data._token = $scope.token;
       data.email = this.loginForm.email;
       data.password = this.loginForm.password;
       console.log(data);
       console.log($scope.token);
-      $http.post('/auth/login',data)
-      .then(function(data) { 
+      $http.post('/auth/loginAjax',data,{
+        headers: {
+          'X-CSRF-TOKEN': $scope.token
+        }})
+        .then(function(data) { 
           console.log(data);
           console.log('success');
-        },function() {
+        },function(data) {
+          console.log(data);
           console.log('fail');
       });
     }
