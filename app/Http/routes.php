@@ -88,7 +88,8 @@ Route::group(['middleware' => ['auth','group', 'group_roles']], function () {
 
     Route::get('group/manage', array('uses' => 'GroupManageController@manage'));
 });
-
+Route::post('auth/loginAjax', 'Auth\AuthController@loginAjax');
+Route::post('auth/registerAjax', 'Auth\AuthController@registerAjax');
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',

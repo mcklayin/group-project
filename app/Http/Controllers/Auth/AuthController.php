@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -65,5 +68,47 @@ class AuthController extends Controller
             'fio' => isset($data['fio']) ? $data['fio'] : '',
             'confirmed' => 1
         ]);
+    }
+
+    /*
+     * Login with ajax
+     *  /
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function loginAjax(Request $request){
+        $credentials = $request->only('email','password');
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            return Response::json(array('code'=>'success'));
+        }
+        else
+        {
+            return Response::json(array('code'=>'fail'));
+        }
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function registerAjax(Request $request)
+    {
+       // $validator = $this->validator($request->all());
+
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|confirmed|min:6',
+            'phone' => 'required|phone'
+        ]);
+
+
+        Auth::login($this->create($request->all()));
+
+        return Response::json(array('code'=>'success'));
     }
 }
