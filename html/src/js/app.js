@@ -4,12 +4,13 @@ require('angular-aria');
 
 //load angular and modules    
 
-angular.module('app.sup', [require('angular-material'),require('angular-ui-router')], function($interpolateProvider) {
+angular.module('app', [require('angular-material'),require('angular-ui-router'),require('angular-cookies')], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
-    $interpolateProvider.endSymbol('%>'); 
+    $interpolateProvider.endSymbol('%>');
   })
-  .config(require('./sup/routes'))
-  .controller("MainCtrl", require('./sup/MainController'));
-
-angular.module('app.main', [require('angular-material'),require('angular-ui-router')])
-  .config(require('./main/routes'));    
+  .config(require('./routes'))
+  .controller("MainCtrl", require('./MainController'))
+  .factory('AuthFactory', require('./auth/AuthFactory'))
+  .controller('navigationCtrl',require('./nav/navigationCtrl'))
+  .directive('navigation',require('./nav/navDirective'));
+     

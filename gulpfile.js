@@ -111,6 +111,7 @@ gulp.task('js', function() {
     //.pipe(uglify())
     .on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(path.js.dest))
     .pipe(gulp.dest(path.js.pup_dest))
     .pipe(browserSync.stream());
