@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth','group']], function () {
     Route::get('group/getFile/{file}', 'GroupController@getFile');
     Route::get('group/getFiles', 'GroupController@getFiles');
     Route::get('group/getNews', 'GroupController@getNews');
+    Route::get('group/getGroup', 'GroupController@getGroup');
     Route::get('group/getUsers', 'GroupController@getUsers');
     Route::get('group/getStaticBlocks', 'GroupController@getStaticBlocks');
     Route::get('group', array('uses'=>'GroupController@index'));
