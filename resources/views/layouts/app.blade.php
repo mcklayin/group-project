@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app"  ng-controller="MainCtrl as MCtrl" >
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,40 +15,28 @@
                   content="Lorem ipsum dolor sit amet, nihil fabulas et sea, nam posse menandri scripserit no, mei."/>
         @show
         <meta name="csrf-token" content="<?php echo csrf_token() ?>"/>
-    
+         <?php /* ?>
+            @yield('styles')
             <!--<link href="{{ asset('css/site.css') }}" rel="stylesheet"> -->
             <script src="{{ asset('js/site.js') }}"></script>
             <link href="{{ asset('css/summernote.css') }}" rel="stylesheet">
-            <link href="{{ asset('css/style.css') }}" rel="stylesheet">
             <script src="{{ asset('js/summernote.min.js') }}"></script>
-            
-    
-        @yield('styles')
-    
-        <link rel="shortcut icon" href="{!! asset('favicon.png')  !!} ">
+         <?php */ ?>    
+        
+         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+         <link rel="shortcut icon" href="{!! asset('favicon.png')  !!} ">
     </head>
-    <body style="height:100%;">
-            <?php /* ?>
+    <body style="height:100%;"> 
+        <div class="hide" ng-init="token = '{{ csrf_token()}}'"></div> 
+        <navigation></navigation>
+        <div ui-view></div>
+        <script src="{{ asset('js/app.js') }}"></script>
+        
+        <?php /* ?>
             <!--@include('partials.nav')-->
-            <?php */ ?>    
-            <div ng-app="app"  ng-controller="MainCtrl as MCtrl" >
-                <div class="hide" ng-init="token = '{{ csrf_token()}}'"></div> 
-                <navigation></navigation>
-                <div ui-view></div>
-                <?php /* ?>
-                    @yield('content')
-                <?php */ ?>        
-                
-                <?php /* ?>
-                    @include('partials.footer')
-                <?php */ ?>    
-            </div>
-            
-         
-    
-    <!-- Scripts -->
-   
-    @yield('scripts')
-       <script src="{{ asset('js/app.js') }}"></script>
+            @yield('content')
+            @include('partials.footer')
+            @yield('scripts')
+        <?php */ ?>        
     </body>
 </html>

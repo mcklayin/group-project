@@ -30,13 +30,15 @@ angular.module('app', [require('angular-material'),require('angular-ui-router'),
     $interpolateProvider.endSymbol('%>');
   })
   .config(require('./routes'))
-  .controller("MainCtrl", require('./MainController'))
   .factory('AuthFactory', require('./auth/AuthFactory'))
+  .factory('GroupFactory', require('./group/GroupFactory'))
+  .controller("MainCtrl", require('./MainController'))
   .controller('navigationCtrl',require('./nav/navigationCtrl'))
   .directive('navigation',require('./nav/navDirective'));
      
-},{"./MainController":1,"./auth/AuthFactory":3,"./nav/navDirective":7,"./nav/navigationCtrl":8,"./routes":9,"angular":20,"angular-animate":11,"angular-aria":13,"angular-cookies":15,"angular-material":17,"angular-ui-router":18}],3:[function(require,module,exports){
-module.exports = ['$cookies',function($cookies) {
+},{"./MainController":1,"./auth/AuthFactory":3,"./group/GroupFactory":8,"./nav/navDirective":9,"./nav/navigationCtrl":10,"./routes":11,"angular":22,"angular-animate":13,"angular-aria":15,"angular-cookies":17,"angular-material":19,"angular-ui-router":20}],3:[function(require,module,exports){
+module.exports = ['$cookies', function($cookies) {
+
   var authorized = $cookies.get('auth')?$cookies.get('auth'):false;
   
   function isAuthorized() {
@@ -105,35 +107,106 @@ module.exports = ['$scope','$http','$state','AuthFactory',function($scope,$http,
       console.log($scope.token);
       $http.post('/auth/loginAjax',data)
         .then(function(data) {  
-          console.log(data);
           if(data.data.code === 'success'){
             AuthFactory.setAuthorize(true);
             $state.go('group');
-          }else{
+          }else {
             AuthFactory.setAuthorize(false);
           }
+      },function(data) {
+        console.log(data);
       });
     }
-  }   
+  }  
 }];
 
 
 
 
 },{}],6:[function(require,module,exports){
-module.exports = ['$scope','$http','$state','AuthFactory',function($scope,$http,$state,AuthFactory) {
+module.exports = ['AuthFactory','$http','$state', function(AuthFactory,$http,$state) {
+  $http.get('/auth/logout')
+    .then(function(){
+      AuthFactory.setAuthorize(false);  
+      $state.go('login');
+    });
+}];
+
+},{}],7:[function(require,module,exports){
+module.exports = ['$scope','$state','AuthFactory','GroupFactory',function($scope,$state,AuthFactory,GroupFactory) {
   if(AuthFactory.isAuthorized()){
-    $http.get('/group/getNews')
-      .then(function(data) {
-      
-        console.log(data);
-      })
+    
+   //this.users = GroupFactory.getUsers();
+   GroupFactory.getUsers().then(function(result) {
+     $scope.users = result;
+   });
+   console.log($scope.users);
+    //this.users = [
+    //  {
+    //    name: 'kitty',
+    //    age: 20 
+    //  },{
+    //    name: 'ron',
+    //    age: 15
+    //  }
+    //];
   }else{
     $state.go('login');
   }
 }];
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+module.exports = ['$http','$state','$q','AuthFactory',function($http,$state,$q,AuthFactory) {
+  if(AuthFactory.isAuthorized()){
+    var users;
+    
+    function error(result) {
+      if(result.status == 401){
+        AuthFactory.setAuthorize(false);
+        $state.go('login');
+      }
+    }
+    
+   
+    
+    
+    function getNews() {
+      return httpGroup('/group/getNews');
+    }
+    
+    function getGroup() {
+      return httpGroup('/group/getGroup');  
+    }
+    
+    function getUsers() {
+      var def = $q.defer();
+      $http.get('/group/getUsers').then(function(result) {
+        def.resolve(result.data);
+      }, error);
+      return def.promise;
+    }
+    
+    function getStaticBlocks() {
+      return httpGroup('/group/getStaticBlocks');
+    }
+    
+    function getFiles() {
+      return httpGroup('/group/getFiles');
+    }
+    
+    return {
+      getNews: getNews,
+      getGroup: getGroup,
+      getUsers: getUsers,
+      getStaticBlocks: getStaticBlocks,
+      getFiles: getFiles
+    };
+  }else{
+    $state.go('login');
+  }
+}];
+
+},{}],9:[function(require,module,exports){
 module.exports = function() {
   return {
     templateUrl: 'views/nav.tpl.html',
@@ -142,40 +215,52 @@ module.exports = function() {
   }
 };
 
-},{}],8:[function(require,module,exports){
-module.exports = function(AuthFactory) {
-  this.links= {};
-  if(AuthFactory.isAuthorized()){
-    this.links = [
-      {
-        title: 'Група',
-        link: 'group'
-      },{
-        title: 'Кабінет',
-        link: 'cabinet'
-      },{
-        title: 'Вийти',
-        link: 'logout'
-      }
-    ];
-  }else{
-    this.links = [
-      {
-        title: 'Контакти',
-        link: 'contacts'
-      },{
-        title: 'Вхід',
-        link: 'login'
-      },{
-        title: 'Реєстрація',
-        link: 'register'
-      }
-    ];
-  }
+},{}],10:[function(require,module,exports){
+module.exports = function(AuthFactory,$scope) {
+  var that = this;
+  this.links= [];
   
+  $scope.$watch(function(){
+    return AuthFactory.isAuthorized();
+  }, function (newValue) {
+    console.log(newValue);
+    that.links = makeLinks(newValue);
+  });
+  
+  function makeLinks(isLoged) {
+    console.log('draw menu'+isLoged);
+    if(isLoged){
+      return [
+        {
+          title: 'Група',
+          link: 'group'
+        },{
+          title: 'Кабінет',
+          link: 'cabinet'
+        },{
+          title: 'Вийти',
+          link: 'logout'
+        }
+      ];
+    }else{
+      return [
+        {
+          title: 'Контакти',
+          link: 'contacts'
+        },{
+          title: 'Вхід',
+          link: 'login'
+        },{
+          title: 'Реєстрація',
+          link: 'register'
+        }
+      ];
+    }
+  }
+  that.links = makeLinks(AuthFactory.isAuthorized());
 };
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = ['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
@@ -207,10 +292,18 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
     .state('group', {
       url: '/group',
       templateUrl: "views/group/group.tpl.html",
-      controller: require('./group/GroupController')
+      controller: require('./group/GroupController'),
+      controllerAs: 'group'
+    })
+    .state('logout', {
+      url: '/logout',
+      controller: require('./auth/logoutController')
+    })
+    .state('cabinet', {
+      url: '/cabinet'
     })
 }];
-},{"./auth/RegisterController":4,"./auth/loginController":5,"./group/GroupController":6}],10:[function(require,module,exports){
+},{"./auth/RegisterController":4,"./auth/loginController":5,"./auth/logoutController":6,"./group/GroupController":7}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -4140,11 +4233,11 @@ angular.module('ngAnimate', [])
 
 })(window, window.angular);
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 require('./angular-animate');
 module.exports = 'ngAnimate';
 
-},{"./angular-animate":10}],12:[function(require,module,exports){
+},{"./angular-animate":12}],14:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -4543,11 +4636,11 @@ ngAriaModule.directive('ngShow', ['$aria', function($aria) {
 
 })(window, window.angular);
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 require('./angular-aria');
 module.exports = 'ngAria';
 
-},{"./angular-aria":12}],14:[function(require,module,exports){
+},{"./angular-aria":14}],16:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -4870,11 +4963,11 @@ angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterPr
 
 })(window, window.angular);
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 require('./angular-cookies');
 module.exports = 'ngCookies';
 
-},{"./angular-cookies":14}],16:[function(require,module,exports){
+},{"./angular-cookies":16}],18:[function(require,module,exports){
 /*!
  * Angular Material Design
  * https://github.com/angular/material
@@ -27674,7 +27767,7 @@ angular.module("material.core").constant("$MD_THEME_CSS", "md-autocomplete.md-TH
 
 
 })(window, window.angular);;window.ngMaterial={version:{full: "1.0.0-rc2-master-faa8b5b"}};
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 // Should already be required, here for clarity
 require('angular');
 
@@ -27688,7 +27781,7 @@ require('./angular-material');
 // Export namespace
 module.exports = 'ngMaterial';
 
-},{"./angular-material":16,"angular":20,"angular-animate":11,"angular-aria":13}],18:[function(require,module,exports){
+},{"./angular-material":18,"angular":22,"angular-animate":13,"angular-aria":15}],20:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -32059,7 +32152,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -60964,11 +61057,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":19}]},{},[2])
+},{"./angular":21}]},{},[2])
 
 
 //# sourceMappingURL=app.js.map

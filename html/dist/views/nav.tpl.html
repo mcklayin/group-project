@@ -3,7 +3,6 @@
         <md-toolbar class="md-theme-light">
             <h1 class="md-toolbar-tools">Навігація</h1>
         </md-toolbar>
-
         <div  ng-repeat="link in nav.links">
             <md-button class="md-primary" ui-sref="<%link.link%>"  ng-click="MCtrl.closeSlider('leftSlider')"><%link.title%></md-button>
         </div>
@@ -12,17 +11,9 @@
         <h2 class="md-toolbar-tools">
             <md-icon md-svg-src="img/icons/bookshelf.svg" style="width:35px;height:35px; margin-right:10px"></md-icon>
             <span flex ui-sref="index" style="color:#fff; cursor:pointer">Group Share</span>
-            <div >
-               
-            </div>
             <div layout="row" layout-align="center center "  class="hide-sm" ng-repeat="link in nav.links">
                 <md-button class="md-primary" ui-sref="<%link.link%>"><%link.title%></md-button>
             </div>
-            <!--<md-button class="md-primary" ui-sref="contacts">Контакти</md-button>-->
-            <!--<md-button ui-sref="login" class="md-primary">Вхід</md-button>-->
-            <!--<md-button ui-sref="register" class="md-primary">Реєстрація</md-button>-->
-            
-            
             <md-button aria-label="comment" class="md-icon-button hide-gt-sm" ng-click="MCtrl.toggleSlider('leftSlider')">
                 <md-icon md-svg-src="img/icons/ic_menu_24px.svg"></md-icon>
             </md-button>

@@ -1,10 +1,20 @@
-module.exports = ['$scope','$http','$state','AuthFactory',function($scope,$http,$state,AuthFactory) {
+module.exports = ['$scope','$state','AuthFactory','GroupFactory',function($scope,$state,AuthFactory,GroupFactory) {
   if(AuthFactory.isAuthorized()){
-    $http.get('/group/getNews')
-      .then(function(data) {
-      
-        console.log(data);
-      })
+    
+   //this.users = GroupFactory.getUsers();
+   GroupFactory.getUsers().then(function(result) {
+     $scope.users = result;
+   });
+   console.log($scope.users);
+    //this.users = [
+    //  {
+    //    name: 'kitty',
+    //    age: 20 
+    //  },{
+    //    name: 'ron',
+    //    age: 15
+    //  }
+    //];
   }else{
     $state.go('login');
   }

@@ -29,6 +29,14 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
     .state('group', {
       url: '/group',
       templateUrl: "views/group/group.tpl.html",
-      controller: require('./group/GroupController')
+      controller: require('./group/GroupController'),
+      controllerAs: 'group'
+    })
+    .state('logout', {
+      url: '/logout',
+      controller: require('./auth/logoutController')
+    })
+    .state('cabinet', {
+      url: '/cabinet'
     })
 }];

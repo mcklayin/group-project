@@ -15,16 +15,17 @@ module.exports = ['$scope','$http','$state','AuthFactory',function($scope,$http,
       console.log($scope.token);
       $http.post('/auth/loginAjax',data)
         .then(function(data) {  
-          console.log(data);
           if(data.data.code === 'success'){
             AuthFactory.setAuthorize(true);
             $state.go('group');
-          }else{
+          }else {
             AuthFactory.setAuthorize(false);
           }
+      },function(data) {
+        console.log(data);
       });
     }
-  }   
+  }  
 }];
 
 

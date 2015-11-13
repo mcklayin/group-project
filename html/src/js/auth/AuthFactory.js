@@ -1,4 +1,5 @@
-module.exports = ['$cookies',function($cookies) {
+module.exports = ['$cookies', function($cookies) {
+
   var authorized = $cookies.get('auth')?$cookies.get('auth'):false;
   
   function isAuthorized() {
