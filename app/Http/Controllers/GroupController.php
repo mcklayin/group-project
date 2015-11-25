@@ -28,6 +28,20 @@ class GroupController extends Controller
         view()->share('group' ,$this->group);
 
     }
+
+    /*
+     * return group AJAX ONLY
+     */
+    public function getGroup($param = false)
+    {
+
+        if(Request::ajax() || $param)
+        {
+            return Response::json($this->group);
+        }
+
+        return $this->group;
+    }
     /*
      * Group Dashboard
      */
