@@ -16,7 +16,8 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
     .state('register', {
       url: '/register',
       templateUrl: "views/auth/register.tpl.html",
-      controller: require('./auth/RegisterController')
+      controller: require('./auth/RegisterController'),
+      controllerAs: 'register'
     })
     .state('reset', {
         url: '/reset',
@@ -31,6 +32,23 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
       templateUrl: "views/group/group.tpl.html",
       controller: require('./group/GroupController'),
       controllerAs: 'group'
+    })
+    .state('group.news', {
+      url: '/news',
+      templateUrl: "views/group/group-news.tpl.html"
+    })
+    .state('group.newsPage', {
+      url: '/news-page?id',
+      templateUrl: "views/group/group-news-page.tpl.html",
+      controller: require('./group/GroupNewsPageCtrl')
+    })
+    .state('group.files', {
+      url: '/files',
+      templateUrl: "views/group/group-files.tpl.html"
+    })
+    .state('group.users', {
+      url: '/users',
+      templateUrl: "views/group/group-users.tpl.html"
     })
     .state('logout', {
       url: '/logout',

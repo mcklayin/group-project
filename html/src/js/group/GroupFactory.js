@@ -1,6 +1,5 @@
 module.exports = ['$http','$state','$q','AuthFactory',function($http,$state,$q,AuthFactory) {
   if(AuthFactory.isAuthorized()){
-    var users;
     
     function error(result) {
       if(result.status == 401){
@@ -9,15 +8,20 @@ module.exports = ['$http','$state','$q','AuthFactory',function($http,$state,$q,A
       }
     }
     
-   
-    
-    
-    function getNews() {
-      return httpGroup('/group/getNews');
-    }
-    
     function getGroup() {
-      return httpGroup('/group/getGroup');  
+      var def = $q.defer();
+      $http.get('/group/getGroup').then(function(result) {
+        def.resolve(result.data);
+      }, error);
+      return def.promise;
+    }
+
+    function getNews() {
+      var def = $q.defer();
+      $http.get('/group/getNews').then(function(result) {
+        def.resolve(result.data);
+      }, error);
+      return def.promise;
     }
     
     function getUsers() {
@@ -28,21 +32,21 @@ module.exports = ['$http','$state','$q','AuthFactory',function($http,$state,$q,A
       return def.promise;
     }
     
-    function getStaticBlocks() {
-      return httpGroup('/group/getStaticBlocks');
-    }
-    
     function getFiles() {
-      return httpGroup('/group/getFiles');
+      var def = $q.defer();
+      $http.get('/group/getFiles').then(function(result) {
+        def.resolve(result.data);
+      }, error);
+      return def.promise;
     }
     
     return {
       getNews: getNews,
       getGroup: getGroup,
       getUsers: getUsers,
-      getStaticBlocks: getStaticBlocks,
       getFiles: getFiles
     };
+    
   }else{
     $state.go('login');
   }

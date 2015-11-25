@@ -1,4 +1,4 @@
-module.exports = function(AuthFactory,$scope) {
+module.exports = function(AuthFactory,$scope,$state,$rootScope) {
   var that = this;
   this.links= [];
   
@@ -15,7 +15,7 @@ module.exports = function(AuthFactory,$scope) {
       return [
         {
           title: 'Група',
-          link: 'group'
+          link: 'group.news'
         },{
           title: 'Кабінет',
           link: 'cabinet'
@@ -39,5 +39,28 @@ module.exports = function(AuthFactory,$scope) {
       ];
     }
   }
+  function getSubLinks() {
+    if($state.includes('group')){
+      return [
+        {
+          title: 'Новини',
+          link: 'group.news'
+        }, {
+          title: 'Користувачі',
+          link: 'group.users'
+        }, {
+          title: 'Файли',
+          link: 'group.files'
+        }
+      ];
+    } else{
+      return [];
+    }
+  }
+
+  $rootScope.$on('$stateChangeSuccess',function() {
+    $scope.subLinks = getSubLinks();
+  });
+  
   that.links = makeLinks(AuthFactory.isAuthorized());
 };

@@ -1,0 +1,11 @@
+<md-card ng-repeat="post in news">
+    <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
+    <md-card-content >
+        <h2 class="md-title"><% post.title %></h2>
+        <p ng-bind-html="post.introduction"></p>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-primary md-hue-1" ui-sref="group.newsPage({id: <%post.id%>})">Читати повністью</md-button>
+        </md-card-actions>
+    </md-card-content>
+
+</md-card>

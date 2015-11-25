@@ -17,7 +17,7 @@ var path = {
     watch: 'html/src/stylus/**/*.styl',
     src: ['html/src/stylus/style.styl', 'html/src/stylus/admin.styl'],
     dest: 'html/dist/css/',
-    pup_dest: 'html/dist/css/'
+    pup_dest: 'public/css/'
   },
   js: {
     src: 'html/src/js/app.js',
@@ -90,6 +90,7 @@ gulp.task('stylus', function() {
         'android 4'
       ))
       .pipe(gulp.dest(path.stylus.dest, {ext: '.css'}))
+      .pipe(gulp.dest(path.stylus.pup_dest, {ext: '.css'}))
       .pipe(browserSync.stream());
 });
 

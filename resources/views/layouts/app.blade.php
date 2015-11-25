@@ -29,7 +29,7 @@
     <body style="height:100%;"> 
         <div class="hide" ng-init="token = '{{ csrf_token()}}'"></div> 
         <navigation></navigation>
-        <div ui-view></div>
+        <div ui-view id="main"></div>
         <script src="{{ asset('js/app.js') }}"></script>
         
         <?php /* ?>

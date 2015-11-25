@@ -1,6 +1,6 @@
-module.exports = ['$scope','$http','$state','AuthFactory',function($scope,$http,$state,AuthFactory) {
+module.exports = ['$scope','$http','$state','AuthFactory','$mdToast','$document',function($scope,$http,$state,AuthFactory,$mdToast,$document) {
   if(AuthFactory.isAuthorized()){
-    $state.go('group');
+    $state.go('group'); 
   }
   
   $scope.submit = submit;
@@ -17,13 +17,21 @@ module.exports = ['$scope','$http','$state','AuthFactory',function($scope,$http,
         .then(function(data) {  
           if(data.data.code === 'success'){
             AuthFactory.setAuthorize(true);
-            $state.go('group');
+            $state.go('group.news');
           }else {
+            console.log(data);
             AuthFactory.setAuthorize(false);
+            $mdToast.show(
+              $mdToast.simple({
+                  parent: $document[0].querySelector('#main')
+              })
+                .content('Не вірно введені дані.')
+                .position('top right')
+                .hideDelay(3000)
+            );
+            //$scope.error
           }
-      },function(data) {
-        console.log(data);
-      });
+        });
     }
   }  
 }];

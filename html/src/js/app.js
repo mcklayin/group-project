@@ -4,9 +4,16 @@ require('angular-aria');
 
 //load angular and modules    
 
-angular.module('app', [require('angular-material'),require('angular-ui-router'),require('angular-cookies')], function($interpolateProvider) {
-    $interpolateProvider.startSymbol('<%');
-    $interpolateProvider.endSymbol('%>');
+angular.module('app', 
+  [
+    require('angular-material'),
+    require('angular-ui-router'),
+    require('angular-cookies'),
+    require('angular-sanitize')
+    ],
+    function($interpolateProvider) {
+      $interpolateProvider.startSymbol('<%');
+      $interpolateProvider.endSymbol('%>');
   })
   .config(require('./routes'))
   .factory('AuthFactory', require('./auth/AuthFactory'))
