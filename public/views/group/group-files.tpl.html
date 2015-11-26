@@ -1,0 +1,11 @@
+<md-list class="md-whiteframe-z1">
+    <md-list-item ng-repeat="file in files">
+        <div class="md-no-style md-list-item-inner">
+            <p><% file.filename %></p>
+            <md-button href="/group/getFile/<% file.id%>" class="md-icon-button launch">
+                <md-icon  aria-label="download" md-svg-icon="/img/icons/ic_get_app_24px.svg"></md-icon>
+            </md-button>
+        </div>    
+        <md-divider></md-divider>
+    </md-list-item>
+</md-list>

@@ -1,0 +1,53 @@
+<div layout="row"  class="main-page" layout-padding>
+    <div flex="100" flex-gt-sm="60" flex-gt-md="33" flex-offset-gt-sm="20"  flex-offset-gt-md="33">
+        <form name="registerForm" class="form reg-form" ng-submit="submit()">
+            <md-content layout-padding="" class="autoScroll">
+                <div layout="col" layout-align="center">
+                    <h2 class="md-display-1">Реєстрація</h2>    
+                </div>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Ім'я</label>
+                    <input ng-model="name" name="name" type="text" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Прізвище</label>
+                    <input  ng-model="fio" name="fio" type="text">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Нікнейм</label>
+                    <input ng-model="username" name="username" type="text">
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>E-mail Адреса(обовязково)</label>
+                    <input ng-model="email" name="email" type="text" ng-change="onInput(registerForm.email)" ng-required="true">
+                    <div ng-messages="registerForm.email.$error" ng-show="registerForm.email.$error['0']">
+                        <div ng-message="0"><% invalids['email'][0] %></div>
+                        <div ng-message="1"><% invalids['email'][1] %></div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Телефон(обовязково)</label>
+                    <input ng-model="phone" name="phone" type="text" ng-change="onInput(registerForm.phone)" ng-required="true">
+                    <div ng-messages="registerForm.phone.$error" ng-show="registerForm.phone.$error['0']">
+                        <div ng-message="0"><% invalids['phone'][0] %></div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Пароль(обовязково)</label>
+                    <input ng-model="password" name="password" ng-change="onInput(registerForm.password)" type="password" ng-required="true">
+                    <div ng-messages="registerForm.password.$error" ng-show="registerForm.password.$error['0']">
+                        <div ng-message="0"><% invalids['password'][0] %></div>
+                        <div ng-message="1"><% invalids['password'][1] %></div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block">
+                    <label>Повторіть пароль(обовязково)</label>
+                    <input ng-model="password_confirmation" name="password_confirmation" type="password" ng-required="true">
+                </md-input-container>
+                <div layout="col" layout-align="center">
+                    <md-button class="md-raised md-primary"  ng-disabled="registerForm.$invalid">Зареєструватися</md-button>
+                </div>
+            </md-content>
+        </form>
+    </div>
+</div>

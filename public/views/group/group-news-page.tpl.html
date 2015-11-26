@@ -1,0 +1,21 @@
+<md-card>
+    <md-card-header>
+        <md-card-avatar>
+            <img class="md-user-avatar" src="img/avatars/dima.jpg"/>
+        </md-card-avatar>
+        <md-card-header-text>
+            <span class="md-title"><% newsObj.author %></span>
+            <span class="md-subhead"><% newsObj.created_at %></span>
+        </md-card-header-text>
+    </md-card-header>
+    <md-divider ></md-divider>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline"><% newsObj.title %></span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <p ng-bind-html="newsObj.introduction">WAIT</p>
+        <p ng-bind-html="newsObj.content">WAIT</p>
+    </md-card-content>
+</md-card>

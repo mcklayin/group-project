@@ -1,0 +1,22 @@
+<nav ng-controller="navigationCtrl as nav" >
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="leftSlider">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">Навігація</h1>
+        </md-toolbar>
+            <md-button class="md-primary" ui-sref="<%link.link%>"  ng-click="MCtrl.closeSlider('leftSlider')" ng-repeat="link in nav.links"><%link.title%></md-button>
+        <hr class="border">
+        <md-button class="md-primary md-hue-1" ui-sref="<% link.link %>" ng-repeat="link in subLinks"><%link.title%></md-button>
+    </md-sidenav>
+    <md-toolbar md-scroll-shrink class="md-whiteframe-z1" style="position: relative;z-index: 10;">
+        <h2 class="md-toolbar-tools">
+            <md-icon md-svg-src="img/icons/bookshelf.svg" style="width:35px;height:35px; margin-right:10px"></md-icon>
+            <span flex ui-sref="index" style="color:#fff; cursor:pointer">Group Share</span>
+            <div layout="row" layout-align="center center "  class="hide-sm" ng-repeat="link in nav.links">
+                <md-button class="md-primary" ui-sref="<%link.link%>"><%link.title%></md-button>
+            </div>
+            <md-button aria-label="comment" class="md-icon-button hide-gt-sm" ng-click="MCtrl.toggleSlider('leftSlider')">
+                <md-icon md-svg-src="img/icons/ic_menu_24px.svg"></md-icon>
+            </md-button>
+        </h2>
+    </md-toolbar>    
+</nav>

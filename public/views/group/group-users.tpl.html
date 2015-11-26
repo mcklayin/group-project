@@ -1,0 +1,22 @@
+<md-list>
+    <div class="table-responsive-vertical md-whiteframe-1dp">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>ПІБ</th>
+                    <th>Поштова адреса</th>
+                    <th>Телефон</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in users">
+                <td data-title="№"><% $index + 1%></td>
+                <td data-title="ПІБ"><% user.name %> <% user.fio %></td>
+                <td data-title="П. адреса"><% user.email%></td>
+                <td data-title="Телефон"><% user.phone||'--'%></td>
+            </tr>
+            </tbody>
+        </table>    
+    </div>
+</md-list>
