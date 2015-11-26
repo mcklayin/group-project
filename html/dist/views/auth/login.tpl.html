@@ -14,10 +14,10 @@
                     <input ng-model="loginForm.password" type="password" ng-required="true">
                 </md-input-container>
                 <div layout="col" layout-align="center">
-                    <md-button class="md-raised md-primary" >Вхід</md-button>
+                    <md-button class="md-raised md-primary" type="submit" >Вхід</md-button>
                     <md-button ui-sref="reset">Забули пароль?</md-button>
                 </div>
-                <div layout="col" layout-align="center">
+                <div layout="col" layout-align="center center">
                     <md-checkbox ng-model="loginForm.remember" class="md-primary">
                         Запам'ятати
                         <input type="checkbox" class="hide" ng-checked="loginForm.remember" />

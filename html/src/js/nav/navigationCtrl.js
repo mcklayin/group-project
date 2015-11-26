@@ -5,12 +5,10 @@ module.exports = function(AuthFactory,$scope,$state,$rootScope) {
   $scope.$watch(function(){
     return AuthFactory.isAuthorized();
   }, function (newValue) {
-    console.log(newValue);
     that.links = makeLinks(newValue);
   });
   
   function makeLinks(isLoged) {
-    console.log('draw menu'+isLoged);
     if(isLoged){
       return [
         {

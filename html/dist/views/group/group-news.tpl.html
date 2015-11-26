@@ -1,7 +1,20 @@
 <md-card ng-repeat="post in news">
-    <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
-    <md-card-content >
-        <h2 class="md-title"><% post.title %></h2>
+    <md-card-header>
+        <md-card-avatar>
+            <img class="md-user-avatar" src="img/avatars/dima.jpg"/>
+        </md-card-avatar>
+        <md-card-header-text>
+            <span class="md-title"><% post.author %></span>
+            <span class="md-subhead"><% post.created_at %></span>
+        </md-card-header-text>
+    </md-card-header>
+    <md-divider ></md-divider>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline"><% post.title %></span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
         <p ng-bind-html="post.introduction"></p>
         <md-card-actions layout="row" layout-align="end center">
             <md-button class="md-primary md-hue-1" ui-sref="group.newsPage({id: <%post.id%>})">Читати повністью</md-button>

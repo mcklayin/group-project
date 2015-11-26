@@ -55,6 +55,7 @@ module.exports = ['$stateProvider', '$urlRouterProvider',
       controller: require('./auth/logoutController')
     })
     .state('cabinet', {
-      url: '/cabinet'
+      url: '/cabinet',
+      templateUrl: "views/cabinet.tpl.html"
     })
 }];

@@ -1,25 +1,42 @@
-module.exports = ['$scope','$state','AuthFactory','GroupFactory',function($scope,$state,AuthFactory,GroupFactory) {
+module.exports = ['$scope','$state','AuthFactory','GroupFactory','$q','$rootScope','$document', function($scope,$state,AuthFactory,GroupFactory,$q,$rootScope,$document) {
   if(AuthFactory.isAuthorized()){
-    
-    GroupFactory.getUsers().then(function(result) {
-      $scope.users = result;
-      //console.log($scope.users);
+    $scope.ready = false;
+    $rootScope.$on('$stateChangeSuccess', function() {
+      $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
     });
-      
-    GroupFactory.getNews().then(function(result) {
-      $scope.news = result;
-      //console.log($scope.news);
+    
+    $q.all([
+      GroupFactory.getUsers().then(function(result) {
+        $scope.users = result;
+      }),
+      GroupFactory.getNews().then(function(result) {
+        $scope.news = result;
+      })]   
+    ).then(function() {
+      $scope.news.forEach(function(news) {
+        news.author = findUserNameById(news['user_id']);
+      });
+      $scope.ready = true;
     });
 
     GroupFactory.getFiles().then(function(result) {
       $scope.files = result;
-      console.log($scope.files);
     });
-
+    
     GroupFactory.getGroup().then(function(result) {
-      $scope.files = result;
-      console.log($scope.group);
+      $scope.groupData = result;
     });
+    
+    function  findUserNameById(id) {
+      var user;
+      $scope.users.forEach(function(item) {
+        if(item.id === id){
+          user = item.fio;
+          return false
+        }
+      });
+      return user;
+    }
     
     this.subLinks = [
       {
