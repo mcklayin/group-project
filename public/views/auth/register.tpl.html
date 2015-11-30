@@ -44,8 +44,8 @@
                     <label>Повторіть пароль(обовязково)</label>
                     <input ng-model="password_confirmation" name="password_confirmation" type="password" ng-required="true">
                 </md-input-container>
-                <div layout="col" layout-align="center">
-                    <md-button class="md-raised md-primary"  ng-disabled="registerForm.$invalid">Зареєструватися</md-button>
+                <div layout="col" layout-align="center center">
+                    <md-button class="md-raised md-primary"  type="submit" ng-disabled="registerForm.$invalid">Зареєструватися</md-button>
                 </div>
             </md-content>
         </form>
