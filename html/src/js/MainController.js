@@ -1,4 +1,4 @@
-module.exports = function($scope,$mdSidenav,$http) {
+module.exports = ['$scope','$mdSidenav','$http',function($scope,$mdSidenav,$http) {
   this.toggleSlider = toggleSlider;
   this.closeSlider = closeSlider;
   $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -12,7 +12,7 @@ module.exports = function($scope,$mdSidenav,$http) {
   function closeSlider(navID) {
     $mdSidenav(navID).close();
   }
-};
+}];
 
 
 

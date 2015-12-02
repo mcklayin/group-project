@@ -10,11 +10,11 @@ angular.module('app',
     require('angular-ui-router'),
     require('angular-cookies'),
     require('angular-sanitize')
-    ],
-    function($interpolateProvider) {
+    ], ['$interpolateProvider' , function($interpolateProvider) {
       $interpolateProvider.startSymbol('<%');
       $interpolateProvider.endSymbol('%>');
-  })
+    }]
+  ) 
   .config(require('./routes'))
   .factory('AuthFactory', require('./auth/AuthFactory'))
   .factory('GroupFactory', require('./group/GroupFactory'))

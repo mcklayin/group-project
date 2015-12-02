@@ -1,4 +1,4 @@
-module.exports = function(AuthFactory,$scope,$state,$rootScope) {
+module.exports = ['AuthFactory','$scope','$state','$rootScope',function(AuthFactory,$scope,$state,$rootScope) {
   var that = this;
   this.links= [];
   
@@ -61,4 +61,4 @@ module.exports = function(AuthFactory,$scope,$state,$rootScope) {
   });
   
   that.links = makeLinks(AuthFactory.isAuthorized());
-};
+}];

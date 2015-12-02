@@ -76,7 +76,10 @@ gulp.task('browser-sync', function() {
 
 gulp.task('stylus', function() {
     return gulp.src(path.stylus.src)
-      .pipe(stylus({comress: true,'include css': true}))
+      .pipe(stylus({
+        compress: true,
+        'include css': true
+      }))
       .on('error', function(err) {
           console.log(err.toString());
           this.emit('end');
@@ -109,7 +112,7 @@ gulp.task('js', function() {
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     // Add transformation tasks to the pipeline here.
-    //.pipe(uglify())
+    .pipe(uglify())
     .on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
     .pipe(sourcemaps.write('./'))

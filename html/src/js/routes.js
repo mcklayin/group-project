@@ -1,5 +1,4 @@
-module.exports = ['$stateProvider', '$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
+module.exports = ['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     //
     // Now set up the states
