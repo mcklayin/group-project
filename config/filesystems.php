@@ -71,7 +71,7 @@ return [
         ],
         'dropbox' => [
             'driver' => 'dropbox',
-            'token' => 'Iqyli4Fe3hAAAAAAAAAACade7q2BL0H62Sw68lUdRrkOGw9G3OBpUQSH75EcyjQh',
+            'token' => env('dropbox_token'),
             'app' => 'group-site-m',
             'bucket' => 'group-site-m',
         ],
