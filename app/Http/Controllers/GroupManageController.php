@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Files;
 use App\Http\Middleware\Group;
-
 use App\Privileges;
 use App\Role;
 use App\StaticBlocks;

@@ -7,7 +7,6 @@ use App\Files;
 use App\Http\Requests\Admin\UserRequest;
 use App\Http\Requests\UserSettingsRequest;
 use App\User;
-
 use App\UserSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

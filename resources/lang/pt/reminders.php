@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'password' => 'A senha precisa ter no mínimo seis caracteres e combinar com a confirmação.',//'Passwords must be at least six characters and match the confirmation.',
-    'user' => "Não conseguimos encontrar um usuário com este e-mail.",
-    'token' => 'O código de redefinição da senha está inválido.',
-    'sent' => 'Nós te enviamos um e-mail com o link para recuperar a sua senha!',
-    'reset' => 'Sua senha foi redefinida!',
+    'password' => 'A senha precisa ter no mínimo seis caracteres e combinar com a confirmação.', //'Passwords must be at least six characters and match the confirmation.',
+    'user'     => 'Não conseguimos encontrar um usuário com este e-mail.',
+    'token'    => 'O código de redefinição da senha está inválido.',
+    'sent'     => 'Nós te enviamos um e-mail com o link para recuperar a sua senha!',
+    'reset'    => 'Sua senha foi redefinida!',
 
 ];
