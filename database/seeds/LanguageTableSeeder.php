@@ -1,9 +1,10 @@
 <?php
-use Illuminate\Database\Seeder;
+
 use App\Language;
+use Illuminate\Database\Seeder;
 
-class LanguageTableSeeder extends Seeder {
-
+class LanguageTableSeeder extends Seeder
+{
     public function run()
     {
         DB::table('languages')->delete();
@@ -23,5 +24,4 @@ class LanguageTableSeeder extends Seeder {
         $language->lang_code = 'ba';
         $language->save();
     }
-
 }

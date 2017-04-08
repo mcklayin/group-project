@@ -15,7 +15,7 @@ Route::pattern('slug', '[0-9a-z-_]+');
 
 /***************    Site routes  **********************************/
 Route::get('/', 'HomeController@index');
-Route::get('home', function(){
+Route::get('home', function () {
     return Redirect::to('/cabinet');
 });
 Route::get('about', 'PagesController@about');
@@ -23,94 +23,90 @@ Route::get('contact', 'PagesController@contact');
 Route::get('articles', 'ArticlesController@index');
 Route::get('article/{slug}', 'ArticlesController@show');
 
-#user cabinet
-Route::get('cabinet/confirm_password/{code}', function($code){
-    $user = User::where('password_confirmation_code','=',$code)->where('password_confirmation_code','!=','')->first();
-    if($user->id && $user->wait_password)
-    {
-        User::where('id','=',$user->id)->update(array('password_confirmation_code'=>'', 'password'=>$user->wait_password,'wait_password'=>''));
+//user cabinet
+Route::get('cabinet/confirm_password/{code}', function ($code) {
+    $user = User::where('password_confirmation_code', '=', $code)->where('password_confirmation_code', '!=', '')->first();
+    if ($user->id && $user->wait_password) {
+        User::where('id', '=', $user->id)->update(['password_confirmation_code'=>'', 'password'=>$user->wait_password, 'wait_password'=>'']);
 
         Session::flash('message', 'Пароль успішно змінено');
-        if(Auth::user())
+        if (Auth::user()) {
             return Redirect::to('/cabinet');
-        else
+        } else {
             return Redirect::to('auth/login');
+        }
     }
-
 });
 Route::get('cabinet/news', 'CabinetController@getGroupNewsFeed');
 Route::get('cabinet/files', 'CabinetController@getGroupFilesFeed');
 Route::any('cabinet/edit_user/{user}/edit', 'CabinetController@edit_user');
 Route::get('cabinet/{user}', 'CabinetController@show');
-Route::get('cabinet', array('as'=>'cabinet','uses'=>'CabinetController@index'));
+Route::get('cabinet', ['as'=>'cabinet', 'uses'=>'CabinetController@index']);
 
-#GROUP CONTROLLER
-Route::group(['middleware' => ['auth','group']], function () {
-
+//GROUP CONTROLLER
+Route::group(['middleware' => ['auth', 'group']], function () {
     Route::get('group/getFile/{file}', 'GroupController@getFile');
     Route::get('group/getFiles', 'GroupController@getFiles');
     Route::get('group/getNews', 'GroupController@getNews');
     Route::get('group/getGroup', 'GroupController@getGroup');
     Route::get('group/getUsers', 'GroupController@getUsers');
     Route::get('group/getStaticBlocks', 'GroupController@getStaticBlocks');
-    Route::get('group', array('uses'=>'GroupController@index'));
-
+    Route::get('group', ['uses'=>'GroupController@index']);
 });
 
+//Group Manage
+Route::group(['middleware' => ['auth', 'group', 'group_roles']], function () {
 
-#Group Manage
-Route::group(['middleware' => ['auth','group', 'group_roles']], function () {
-
-    #News
+    //News
     Route::get('group/manage/news', 'GroupManageController@news');
     Route::any('group/manage/news/add', 'GroupManageController@addNews');
     Route::any('group/manage/news/{article}/edit', 'GroupManageController@editNews');
     Route::any('group/manage/news/{article}/delete', 'GroupManageController@deleteNews');
 
-    #Static Blocks
+    //Static Blocks
     Route::get('group/manage/blocks', 'GroupManageController@staticBlocks');
     Route::any('group/manage/blocks/add', 'GroupManageController@addStaticBlock');
     Route::any('group/manage/blocks/{static}/edit', 'GroupManageController@editStaticBlock');
     Route::any('group/manage/blocks/{static}/delete', 'GroupManageController@deleteStaticBlock');
 
-    #Files
+    //Files
     Route::get('group/manage/files', 'GroupManageController@files');
     Route::any('group/manage/files/add', 'GroupManageController@addFile');
     Route::any('group/manage/files/{file}/delete', 'GroupManageController@deleteFile');
 
-    #Users
+    //Users
     Route::get('group/manage/users', 'GroupManageController@users');
     Route::any('group/manage/users/add', 'GroupManageController@addUser');
     Route::any('group/manage/users/{user}/edit', 'GroupManageController@editUser');
     Route::any('group/manage/users/{user}/delete', 'GroupManageController@deleteUser');
 
-    #Sends
+    //Sends
     Route::any('group/manage/sends', 'GroupManageController@makeSend');
 
-    Route::get('group/manage', array('uses' => 'GroupManageController@manage'));
+    Route::get('group/manage', ['uses' => 'GroupManageController@manage']);
 });
 Route::post('auth/loginAjax', 'Auth\AuthController@loginAjax');
 Route::post('auth/registerAjax', 'Auth\AuthController@registerAjax');
 Route::controllers([
-    'auth' => 'Auth\AuthController',
+    'auth'     => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
-Route::get('admin', array('middleware'=>'auth','uses'=>'Admin\DashboardController@index'));
+Route::get('admin', ['middleware'=>'auth', 'uses'=>'Admin\DashboardController@index']);
 /***************    Admin routes  **********************************/
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
-    # Admin Dashboard
+    // Admin Dashboard
 
     Route::get('dashboard', 'Admin\DashboardController@index');
 
-    # Language
+    // Language
     Route::get('language/data', 'Admin\LanguageController@data');
     Route::get('language/{language}/show', 'Admin\LanguageController@show');
     Route::get('language/{language}/edit', 'Admin\LanguageController@edit');
     Route::get('language/{language}/delete', 'Admin\LanguageController@delete');
     Route::resource('language', 'Admin\LanguageController');
 
-    # Article category
+    // Article category
     Route::get('articlecategory/data', 'Admin\ArticleCategoriesController@data');
     Route::get('articlecategory/{articlecategory}/show', 'Admin\ArticleCategoriesController@show');
     Route::get('articlecategory/{articlecategory}/edit', 'Admin\ArticleCategoriesController@edit');
@@ -118,7 +114,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('articlecategory/reorder', 'Admin\ArticleCategoriesController@getReorder');
     Route::resource('articlecategory', 'Admin\ArticleCategoriesController');
 
-    # Articles
+    // Articles
     Route::get('article/data', 'Admin\ArticleController@data');
     Route::get('article/{article}/show', 'Admin\ArticleController@show');
     Route::get('article/{article}/edit', 'Admin\ArticleController@edit');
@@ -126,30 +122,28 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('article/reorder', 'Admin\ArticleController@getReorder');
     Route::resource('article', 'Admin\ArticleController');
 
-    #File
+    //File
     Route::get('file/data', 'Admin\FileController@data');
     Route::get('file/{file}/show', 'Admin\FileController@show');
     Route::get('file/{file}/edit', 'Admin\FileController@edit');
     Route::get('file/{file}/delete', 'Admin\FileController@delete');
     Route::get('file', 'Admin\FileController@index');
 
-
-    #Group
+    //Group
     Route::get('group/data', 'Admin\GroupController@data');
     Route::get('group/{group}/show', 'Admin\GroupController@show');
     Route::get('group/{group}/edit', 'Admin\GroupController@edit');
     Route::get('group/{group}/delete', 'Admin\GroupController@delete');
     Route::resource('group', 'Admin\GroupController');
 
-    #Static Blocks
+    //Static Blocks
     Route::get('static/data', 'Admin\StaticBlocksController@data');
     Route::get('static/{static}/show', 'Admin\StaticBlocksController@show');
     Route::get('static/{static}/edit', 'Admin\StaticBlocksController@edit');
     Route::get('static/{static}/delete', 'Admin\StaticBlocksController@delete');
     Route::resource('static', 'Admin\StaticBlocksController');
 
-
-    # Users
+    // Users
     Route::get('user/data', 'Admin\UserController@data');
     Route::get('user/{user}/show', 'Admin\UserController@show');
     Route::get('user/{user}/edit', 'Admin\UserController@edit');

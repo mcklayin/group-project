@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'news' => 'Новости',
+    'news'         => 'Новости',
     'introduction' => 'Уводна',
-    'content' => 'Цијела',
-    'source' => 'Извор',
-    'picture' => 'Слика',
-    'category' => 'Категорија',
+    'content'      => 'Цијела',
+    'source'       => 'Извор',
+    'picture'      => 'Слика',
+    'category'     => 'Категорија',
 
 ];

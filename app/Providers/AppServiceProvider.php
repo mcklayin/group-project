@@ -15,8 +15,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        Validator::extend('phone', function($attribute, $value, $parameters) {
-            return preg_match('/\+\d{12}/',$value);
+        Validator::extend('phone', function ($attribute, $value, $parameters) {
+            return preg_match('/\+\d{12}/', $value);
         });
     }
 

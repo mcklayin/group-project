@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GroupRequest extends FormRequest {
-
+class GroupRequest extends FormRequest
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -12,7 +14,7 @@ class GroupRequest extends FormRequest {
     public function rules()
     {
         return [
-            'name' => 'required|min:3',
+            'name'  => 'required|min:3',
             'owner' => 'required|integer',
         ];
     }
@@ -26,5 +28,4 @@ class GroupRequest extends FormRequest {
     {
         return true;
     }
-
 }

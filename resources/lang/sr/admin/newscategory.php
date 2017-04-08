@@ -3,5 +3,4 @@
 return [
     'newscategories' => 'Категорије новоти',
 
-
 ];

@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App;
 use App\Http\Controllers\AdminController;
 use App\StaticBlocks;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 
 class StaticBlocksController extends AdminController
 {
-
     public function __construct()
     {
         view()->share('type', 'static');
         view()->share('params', '');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +39,8 @@ class StaticBlocksController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -54,7 +51,8 @@ class StaticBlocksController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function show(StaticBlocks $block)
@@ -67,7 +65,8 @@ class StaticBlocksController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function edit($id)
@@ -78,8 +77,9 @@ class StaticBlocksController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return Response
      */
     public function update(Request $request, $id)
@@ -90,7 +90,8 @@ class StaticBlocksController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy(StaticBlocks $block)
@@ -101,14 +102,13 @@ class StaticBlocksController extends AdminController
 
     public function data()
     {
-        $file = StaticBlocks::select(array('static_blocks.id','static_blocks.text','static_blocks.is_active', 'static_blocks.created_at'));
+        $file = StaticBlocks::select(['static_blocks.id', 'static_blocks.text', 'static_blocks.is_active', 'static_blocks.created_at']);
 
         $params = Input::get('params');
         $group_id = $params['group_id'];
 
-        if($group_id)
-        {
-            $file->where('group_id','=',$group_id);
+        if ($group_id) {
+            $file->where('group_id', '=', $group_id);
         }
 
         return \Datatables::of($file)

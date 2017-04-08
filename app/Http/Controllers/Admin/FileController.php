@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Files;
+use App\Http\Controllers\Controller;
 use File;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -20,18 +18,21 @@ class FileController extends Controller
         view()->share('type', 'file');
         view()->share('params', '');
     }
+
     public function index()
     {
         $group_id = Input::get('group_id');
-        view()->share('params', json_encode(array('group_id'=>$group_id)));
+        view()->share('params', json_encode(['group_id'=>$group_id]));
 
         return view('admin.file.index');
     }
+
     public function delete(Files $file)
     {
         $file->delete();
     }
-    public function show(Request $request,Files $file)
+
+    public function show(Request $request, Files $file)
     {
         //todo
         /*
@@ -39,35 +40,32 @@ class FileController extends Controller
          * and download it to user
          */
       //  return response()->download(public_path().'/'.$file->path, $file->filename);
-        if($request->ajax())
-        {
+        if ($request->ajax()) {
             return $file->toJson();
         }
 
-        $response = new StreamedResponse;
+        $response = new StreamedResponse();
 
-
-        $response->setCallBack(function() use ($file)
-        {
+        $response->setCallBack(function () use ($file) {
             $disk = Storage::disk('dropbox');
             echo $disk->get($file->path);
         });
 
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $file->filename);
-        $response->headers->set('Content-Disposition',$disposition);
+        $response->headers->set('Content-Disposition', $disposition);
 
         return $response;
     }
+
     public function data()
     {
-        $file = Files::join("users", "users.id", '=',"files.user_id")->select(array('files.id','files.filename','files.path','users.name', 'files.created_at'));
+        $file = Files::join('users', 'users.id', '=', 'files.user_id')->select(['files.id', 'files.filename', 'files.path', 'users.name', 'files.created_at']);
 
         $params = Input::get('params');
         $group_id = $params['group_id'];
 
-        if($group_id)
-        {
-            $file->where('group_id','=',$group_id);
+        if ($group_id) {
+            $file->where('group_id', '=', $group_id);
         }
 
         return \Datatables::of($file)

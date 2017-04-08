@@ -2,10 +2,8 @@
 
 namespace App\Handlers\Events;
 
-use App\UserSettings;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldBeQueued;
 use App\User;
+use App\UserSettings;
 
 class AuthLoginEventHandler
 {
@@ -22,7 +20,8 @@ class AuthLoginEventHandler
     /**
      * Handle the event.
      *
-     * @param  Events  $event
+     * @param Events $event
+     *
      * @return void
      */
     public function handle(User $user, $remember)

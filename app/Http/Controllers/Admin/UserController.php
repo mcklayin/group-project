@@ -1,18 +1,17 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+
+namespace App\Http\Controllers\Admin;
 
 use App\Group;
 use App\Http\Controllers\AdminController;
-use App\User;
 use App\Http\Requests\Admin\UserRequest;
+use App\User;
 use Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
-
 class UserController extends AdminController
 {
-
-
     public function __construct()
     {
         view()->share('type', 'user');
@@ -28,7 +27,7 @@ class UserController extends AdminController
     {
         // Show the page
         $group_id = Input::get('group_id');
-        view()->share('params', json_encode(array('group_id'=>$group_id)));
+        view()->share('params', json_encode(['group_id'=>$group_id]));
 
         return view('admin.user.index');
     }
@@ -40,7 +39,8 @@ class UserController extends AdminController
      */
     public function create()
     {
-        $groups = Group::all()->lists('name','id');
+        $groups = Group::all()->lists('name', 'id');
+
         return view('admin.user.create_edit', compact('groups'));
     }
 
@@ -51,8 +51,7 @@ class UserController extends AdminController
      */
     public function store(UserRequest $request)
     {
-
-        $user = new User ($request->except('password','password_confirmation'));
+        $user = new User($request->except('password', 'password_confirmation'));
         $user->password = bcrypt($request->password);
         $user->confirmed = 1;
         $user->save();
@@ -62,12 +61,12 @@ class UserController extends AdminController
      * Show the form for editing the specified resource.
      *
      * @param $user
+     *
      * @return Response
      */
     public function edit(User $user)
     {
-        $groups = Group::all()->lists('name','id');
-
+        $groups = Group::all()->lists('name', 'id');
 
         return view('admin.user.create_edit', compact('user', 'groups'));
     }
@@ -76,6 +75,7 @@ class UserController extends AdminController
      * Update the specified resource in storage.
      *
      * @param $user
+     *
      * @return Response
      */
     public function update(UserRequest $request, User $user)
@@ -89,16 +89,16 @@ class UserController extends AdminController
             }
         }
         $user->group_id = $request->get('group_id');
-        $user->update($request->except('password','password_confirmation','group_id'));
+        $user->update($request->except('password', 'password_confirmation', 'group_id'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param $user
+     *
      * @return Response
      */
-
     public function delete(User $user)
     {
         return view('admin.user.delete', compact('user'));
@@ -106,7 +106,7 @@ class UserController extends AdminController
 
     public function deleteFromGroup(User $user, $id)
     {
-        $d = DB::table("user_groups")->where('user_id','=',$user->id)->delete();
+        $d = DB::table('user_groups')->where('user_id', '=', $user->id)->delete();
 
         return Redirect::to('/admin/user?group_id='.$id);
     }
@@ -115,6 +115,7 @@ class UserController extends AdminController
      * Remove the specified resource from storage.
      *
      * @param $user
+     *
      * @return Response
      */
     public function destroy(User $user)
@@ -130,14 +131,13 @@ class UserController extends AdminController
     public function data()
     {
         $users = User::leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
-                 ->select(array('users.id', 'users.name', 'users.email', 'users.confirmed','user_groups.group_id', 'users.created_at'));
+                 ->select(['users.id', 'users.name', 'users.email', 'users.confirmed', 'user_groups.group_id', 'users.created_at']);
 
         $params = Input::get('params');
         $group_id = $params['group_id'];
 
-        if($group_id)
-        {
-            $users->where('user_groups.group_id','=',$group_id);
+        if ($group_id) {
+            $users->where('user_groups.group_id', '=', $group_id);
         }
 
         return Datatables::of($users)
@@ -153,5 +153,4 @@ class UserController extends AdminController
             ->remove_column('id')
             ->make();
     }
-
 }

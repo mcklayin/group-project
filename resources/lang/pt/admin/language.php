@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'code' => 'Código',
-    'icon' => 'Ícone',
+    'code'      => 'Código',
+    'icon'      => 'Ícone',
     'languages' => 'Idiomas',
 
 ];

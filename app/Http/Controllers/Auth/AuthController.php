@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
@@ -39,34 +39,36 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:users,email',
             'password' => 'required|confirmed|min:6',
-            'phone' => 'required|phone'
+            'phone'    => 'required|phone',
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'phone' => isset($data['phone']) ? $data['phone'] : '',
-            'fio' => isset($data['fio']) ? $data['fio'] : '',
-            'confirmed' => 1
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'phone'     => isset($data['phone']) ? $data['phone'] : '',
+            'fio'       => isset($data['fio']) ? $data['fio'] : '',
+            'confirmed' => 1,
         ]);
     }
 
@@ -77,38 +79,37 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function loginAjax(Request $request){
-        $credentials = $request->only('email','password');
+    public function loginAjax(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            return Response::json(array('code'=>'success'));
-        }
-        else
-        {
-            return Response::json(array('code'=>'fail'));
+            return Response::json(['code'=>'success']);
+        } else {
+            return Response::json(['code'=>'fail']);
         }
     }
 
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function registerAjax(Request $request)
     {
-       // $validator = $this->validator($request->all());
+        // $validator = $this->validator($request->all());
 
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:users,email',
             'password' => 'required|confirmed|min:6',
-            'phone' => 'required|phone'
+            'phone'    => 'required|phone',
         ]);
-
 
         Auth::login($this->create($request->all()));
 
-        return Response::json(array('code'=>'success'));
+        return Response::json(['code'=>'success']);
     }
 }
