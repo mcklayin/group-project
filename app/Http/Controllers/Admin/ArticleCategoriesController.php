@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ArticleCategory;
-use App\Language;
 use App\Http\Controllers\AdminController;
 use App\Http\Requests\Admin\ArticleCategoryRequest;
-use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Requests\Admin\ReorderRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Language;
 use Datatables;
+use Illuminate\Support\Facades\Auth;
 
-class ArticleCategoriesController extends AdminController {
-
+class ArticleCategoriesController extends AdminController
+{
     public function __construct()
     {
         view()->share('type', 'articlecategory');
     }
+
     /**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
         return view('admin.articlecategory.index');
-	}
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -35,6 +35,7 @@ class ArticleCategoriesController extends AdminController {
     public function create()
     {
         $languages = Language::lists('name', 'id')->toArray();
+
         return view('admin.articlecategory.create_edit', compact('languages'));
     }
 
@@ -46,40 +47,44 @@ class ArticleCategoriesController extends AdminController {
     public function store(ArticleCategoryRequest $request)
     {
         $articlecategory = new ArticleCategory($request->all());
-        $articlecategory -> user_id = Auth::id();
-        $articlecategory -> save();
+        $articlecategory->user_id = Auth::id();
+        $articlecategory->save();
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function edit(ArticleCategory $articlecategory)
     {
         $languages = Language::lists('name', 'id')->toArray();
-        return view('admin.articlecategory.create_edit',compact('articlecategory','languages'));
+
+        return view('admin.articlecategory.create_edit', compact('articlecategory', 'languages'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function update(ArticleCategoryRequest $request, ArticleCategory $articlecategory)
     {
-        $articlecategory -> user_id_edited = Auth::id();
-        $articlecategory -> update($request->all());
+        $articlecategory->user_id_edited = Auth::id();
+        $articlecategory->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param $id
+     *
      * @return Response
      */
-
     public function delete(ArticleCategory $articlecategory)
     {
         return view('admin.articlecategory.delete', compact('articlecategory'));
@@ -89,6 +94,7 @@ class ArticleCategoriesController extends AdminController {
      * Remove the specified resource from storage.
      *
      * @param $id
+     *
      * @return Response
      */
     public function destroy(ArticleCategory $articleCategory)
@@ -104,7 +110,7 @@ class ArticleCategoriesController extends AdminController {
     public function data()
     {
         $article_categories = ArticleCategory::join('languages', 'languages.id', '=', 'article_categories.language_id')
-            ->select(array('article_categories.id','article_categories.title', 'languages.name', 'article_categories.created_at'))
+            ->select(['article_categories.id', 'article_categories.title', 'languages.name', 'article_categories.created_at'])
             ->orderBy('article_categories.position', 'ASC');
 
         return Datatables::of($article_categories)
@@ -117,22 +123,24 @@ class ArticleCategoriesController extends AdminController {
     }
 
     /**
-     * Reorder items
+     * Reorder items.
      *
      * @param items list
+     *
      * @return items from @param
      */
-    public function getReorder(ReorderRequest $request) {
+    public function getReorder(ReorderRequest $request)
+    {
         $list = $request->list;
-        $items = explode(",", $list);
+        $items = explode(',', $list);
         $order = 1;
         foreach ($items as $value) {
             if ($value != '') {
-                ArticleCategory::where('id', '=', $value) -> update(array('position' => $order));
+                ArticleCategory::where('id', '=', $value)->update(['position' => $order]);
                 $order++;
             }
         }
+
         return $list;
     }
-
 }

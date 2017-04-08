@@ -1,7 +1,9 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-class AdminController extends Controller {
+namespace App\Http\Controllers;
 
+class AdminController extends Controller
+{
     /**
      * Initializer.
      *
@@ -11,7 +13,5 @@ class AdminController extends Controller {
     {
         $this->middleware('auth');
         $this->middleware('admin');
-
     }
-
 }

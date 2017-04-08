@@ -12,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-       'group/manage/files/add'
+       'group/manage/files/add',
     ];
 }

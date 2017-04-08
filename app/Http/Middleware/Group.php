@@ -8,8 +8,8 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 
 class Group
 {
-    protected  $auth;
-    protected  $response;
+    protected $auth;
+    protected $response;
 
     public function __construct(Guard $auth,
                                 ResponseFactory $response)
@@ -18,26 +18,22 @@ class Group
         $this->response = $response;
     }
 
-
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check())
-        {
-
-            if($this->auth->user()->groups->first())
-            {
+        if ($this->auth->check()) {
+            if ($this->auth->user()->groups->first()) {
                 return $next($request);
             }
-
-
         }
+
         return $this->response->redirectTo('/');
     }
 }

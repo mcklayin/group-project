@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'article' => 'Article',
+    'article'      => 'Article',
     'introduction' => 'Introduction',
-    'content' => 'Content',
-    'source' => 'Source',
-    'picture' => 'Picture',
-    'category' => 'Category',
+    'content'      => 'Content',
+    'source'       => 'Source',
+    'picture'      => 'Picture',
+    'category'     => 'Category',
 
 ];

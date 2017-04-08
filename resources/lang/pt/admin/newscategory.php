@@ -3,5 +3,4 @@
 return [
     'newscategories' => 'Categoria de Notícias',
 
-
 ];

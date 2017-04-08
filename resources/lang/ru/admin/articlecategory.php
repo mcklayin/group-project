@@ -3,5 +3,4 @@
 return [
     'articlecategories' => 'Article categories',
 
-
 ];

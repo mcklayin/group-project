@@ -3,5 +3,4 @@
 return [
     'articlecategories' => 'Катогорії новин',
 
-
 ];

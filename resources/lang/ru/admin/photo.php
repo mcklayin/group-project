@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'photo' => 'Photos',
-    'album' =>  'Album',
+    'photo'       => 'Photos',
+    'album'       => 'Album',
     'album_cover' => 'Album cover',
-    'slider' => 'Slider',
+    'slider'      => 'Slider',
     'description' => 'Description',
-    'picture' => 'Picture',
+    'picture'     => 'Picture',
 
 ];

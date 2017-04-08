@@ -12,6 +12,6 @@ return [
     'yes'                   => 'Sim',
     'no'                    => 'Não',
     'roles'                 => 'Papéis',
-    'roles_info'            => 'Adicionando este papel ao usuário, será adicionado todos os privilégios deste papel ao usuário.'
+    'roles_info'            => 'Adicionando este papel ao usuário, será adicionado todos os privilégios deste papel ao usuário.',
 
 ];

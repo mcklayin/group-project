@@ -2,12 +2,8 @@
 
 namespace App\Handlers\Events;
 
-
 use App\Events\Event;
 use App\User;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
 use Illuminate\Support\Facades\Session;
 
 class AuthLogoutEventHandler
@@ -25,7 +21,8 @@ class AuthLogoutEventHandler
     /**
      * Handle the event.
      *
-     * @param  Events $event
+     * @param Events $event
+     *
      * @return void
      */
     public function handle(User $user)
@@ -33,6 +30,4 @@ class AuthLogoutEventHandler
         Session::forget('user_privileges');
         Session::forget('user_settings');
     }
-
-
 }

@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'article' => 'Новини',
+    'article'      => 'Новини',
     'introduction' => 'Короткий опис',
-    'content' => 'Текст',
-    'source' => 'Джерело',
-    'picture' => 'Зображення',
-    'category' => 'Категорія',
+    'content'      => 'Текст',
+    'source'       => 'Джерело',
+    'picture'      => 'Зображення',
+    'category'     => 'Категорія',
 
 ];

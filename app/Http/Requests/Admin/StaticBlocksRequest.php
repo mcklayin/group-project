@@ -24,7 +24,7 @@ class StaticBlocksRequest extends Request
     public function rules()
     {
         return [
-            'text' => 'required|min:25',
+            'text'     => 'required|min:25',
             'group_id' => 'required|integer',
         ];
     }

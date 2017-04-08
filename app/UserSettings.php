@@ -8,38 +8,35 @@ use Illuminate\Support\Facades\Session;
 
 class UserSettings extends Model
 {
-    public static function getKeyValue($user_id=0, $key=''){
-
-        $settings = array();
+    public static function getKeyValue($user_id = 0, $key = '')
+    {
+        $settings = [];
         $settings = Session::get('user_settings');
 
-        if(!empty($settings))
+        if (!empty($settings)) {
             return $settings;
+        }
 
-
-        if(!$user_id)
+        if (!$user_id) {
             $user_id = Auth::user()->id;
+        }
 
-        $data = UserSettings::where('user_id','=',$user_id);
+        $data = self::where('user_id', '=', $user_id);
 
-        if($key)
-        {
-            $data->where('key','=',$key);
+        if ($key) {
+            $data->where('key', '=', $key);
         }
 
         $params = $data->get();
 
-        foreach($params as $k=>$v)
-        {
+        foreach ($params as $k=>$v) {
             $settings[$v['key']] = $v['value'];
         }
 
-        if($settings)
-        {
+        if ($settings) {
             Session::put('user_settings', $settings);
         }
+
         return $settings;
-
-
     }
 }
